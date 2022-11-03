@@ -37,7 +37,7 @@ input, a {
 		function authorize() {
 			document.cookie = "clientid=" + getInput("client") + ";domain=.maxxq.org;path=/";
 			document.cookie = "secret=" + getInput("secret") + ";domain=.maxxq.org;path=/";
-			document.cookie = "redirect=" + getInput("redirect_url") + ";domain=.maxxq.org;path=/";
+			document.cookie = "redirect_url=" + getInput("redirect_url") + ";domain=.maxxq.org;path=/";
 			document.cookie = "token_endpoint=" + getInput("token_endpoint") + ";domain=.maxxq.org;path=/";
 			window.location.href = getInput("authorize_endpoint") +  "?response_type=code"
 					+ "&client_id=" + getInput("client")
