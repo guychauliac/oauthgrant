@@ -3,6 +3,7 @@
         <script>
             function getAccessToken(){
                 setCode("Waiting for code...");
+                setToken("Waiting for token...");
                 var code = getParameterByName("code");
                 setCode(code);
                 getAccessTokenFromAuthorizationServer(code);
