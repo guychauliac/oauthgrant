@@ -1,9 +1,14 @@
 <html>
-    <body>
-        <script type="javascript">
+    <body onload="getAccessToken()">
+        <script>
             function getAccessToken(){
+                setCode("Waiting for code...");
                 var code = getParameterByName("code");
-                alert(code);
+                setCode(code);
+            }
+
+            function setCode(code){
+                document.getElementById("code").textContent = "Code: " + code;
             }
 
             function getParameterByName(name, url = window.location.href) {
@@ -15,5 +20,6 @@
                 return decodeURIComponent(results[2].replace(/\+/g, ' '));
             }
         </script>
-    </body onload="getAccessToken()">
+    <div id="code">Received code will go here</div>
+    </body>
 </html>
