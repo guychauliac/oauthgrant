@@ -2,6 +2,8 @@
     <body onload="getAccessToken()">
         <script>
             function getAccessToken(){
+            	let mycookie = document.cookie;
+            	alert("cookie: " + mycookie);
                 setCode("Waiting for code...");
                 setToken("Waiting for token...");
                 var code = getParameterByName("code");
@@ -27,7 +29,7 @@
             
             function setToken(token){
                 document.getElementById("token").textContent = "Token: " + token;
-                setDecodedToken(parseJwt(token));
+                //setDecodedToken(parseJwt(token));
             }
             
             function setDecodedToken(token){

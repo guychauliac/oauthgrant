@@ -22,7 +22,7 @@ input, a {
 	Redirect url: <input type="text" size="128" id="redirect_url" value="https://www.maxxq.org/callback.html">
 	Audience: <input type="text" size="128" id="audience" value="urn:axa:axabe:auth0:testapi:uri">
 	Scope: <input type="text" size="128" id="scope" value="read:logs">
-
+	
 	<button onClick="authorize()">test</button>
 
 	<script>
@@ -32,6 +32,7 @@ input, a {
 
 
 		function authorize() {
+			document.cookie = "clientid=" + client + ";domain=.maxxq.org;path=/";;
 			window.location.href = getInput("authorize_endpoint") +  "?response_type=code"
 					+ "&client_id=" + getInput("client")
 					+ "&redirect_uri=" + getInput("redirect_url")
