@@ -18,7 +18,7 @@
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    body: 'grant_type=authorization_code&client_id=V5toQWdVGflZKYk7sqhi2TvPAxNUAyqA&client_secret=o8IQSja5NW-YQZQbXJTk1rsiP6o5vPycG07hsx3ni0sOEhppiYP4Oz4UeHLNkIFQ&code=' + code + '&redirect_uri=https://www.maxxq.org/callback.html'
+                    body: 'grant_type=authorization_code&client_id=' + getCookie("clientid") + '&client_secret=' + getCookie("secret") + '&code=' + code + '&redirect_uri=https://www.maxxq.org/callback.html'
                 })
                 .then(response => response.json())
                 .then(response => setToken(JSON.stringify(response)))
