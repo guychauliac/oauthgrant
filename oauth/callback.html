@@ -75,6 +75,10 @@
             var accessTokenAsString = JSON.stringify(accessTokenReponse);
             setField("token", accessTokenAsString);
             storeInCookie(authorizationcode, accessTokenAsString);
+            showAccessTokenFields(accessTokenReponse);
+        }
+
+        function showAccessTokenFields(accessTokenReponse){
             var accessToken = accessTokenReponse.access_token;
             var tokenParts = accessToken.split('.');
             var jwtHeader = parseJwt(tokenParts[0]);
