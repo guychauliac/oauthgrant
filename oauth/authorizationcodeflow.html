@@ -35,6 +35,7 @@
 
 
 	<button onClick="authorize()">Authorize</button>
+	<button onClick="createRequest()">Show authorization request</button>
 	<a href="/oauth/">Back</a>
 
 	<script>
@@ -84,8 +85,7 @@
 				return parts.pop().split(';').shift();
 		}
 
-		function authorize() {
-			storeInCookie();
+		function createRequest(){
 			var authRequest = getInput("authorize_endpoint")
 				+ "?response_type=code" + "&client_id="
 				+ getInput("clientid") + "&redirect_uri="
@@ -93,7 +93,13 @@
 				+ getInput("audience") + "&scope="
 				+ getInput("scope");
 			setField("authrequest", authRequest);
-			window.location.href = authRequest;
+			return authRequest;
+		}
+
+		function authorize() {
+			storeInCookie();
+			
+			window.location.href = createRequest();
 		}
 	</script>
 </body>
