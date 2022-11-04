@@ -58,7 +58,7 @@ input, a {
             
             function validateMatchingScopes(jwtBody){
             	if(!jwtBody.scope){
-            		setField("matchingscopes", "No scopes where authorized!");
+            		setWarning("No scopes where authorized!", "warning");
             	}
             	
             	var authorizedScopes = jwtBody.scope.split(" ");
@@ -69,7 +69,19 @@ input, a {
             	});
 
             	if(notAuthorizedScopes.length > 0){
-                    setField("matchingscopes", "Some scopes where not authorized: " + notAuthorizedScopes);
+                    setWarning( "Some scopes where not authorized: " + notAuthorizedScopes, "warning");
+                } else {
+                    setWarning("All scopes where authorized", "info");
+                }
+            }
+
+            function setWarning(severity, message){
+                setField("warning", message);
+                if(severity == "warning"){
+                    document.getElementById("warning").style="w3-panel w3-pale-red w3-border";
+                }
+                if(severity == "info"){
+                    document.getElementById("warning").style="w3-panel w3-green w3-border";
                 }
             }
             
@@ -113,7 +125,8 @@ input, a {
     <pre id="decoded_body">Decoded access token body will go here</pre>
     Access token signature:
     <pre id="signature">Decoded access token signature will go here</pre>
-    <div class="w3-panel w3-pale-red w3-border" id="matchingscopes">Result of matching scopes</div>
+    <div id="warning" class="w3-panel w3-pale-red w3-border" id="warning">Result of matching scopes</div>
+    
     <a href="https://jwt.io/">Decode the access token at jwt.io</a>
     <a href="/oauth/">Back</a>
 </body>
