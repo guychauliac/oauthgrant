@@ -1,83 +1,16 @@
 <!DOCTYPE html>
 <html>
-<style>
-input, a {
-	display: block;
-	margin: 20px 0;
-}
-</style>
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="description" content="OAuth debugger">
-  <meta name="keywords" content="OAuth debug jwt">
-  <meta name="author" content="Guy Chauliac">
+    <meta charset="UTF-8">
+    <meta name="description" content="OAuth debugger">
+    <meta name="keywords" content="OAuth debug jwt">
+    <meta name="author" content="Guy Chauliac">
 </head>
-<body onload="loadFromCookie()">
-	<div>v1.1.5</div>
-	<a
-		href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/call-your-api-using-the-authorization-code-flow">Call
-		your api using the authorizaton code flow auth0</a>
-	<a
-		href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/call-your-api-using-the-authorization-code-flow-with-pkce">Call
-		your api using the authorization code flow with PKCE</a>
-	<a
-		href="https://dev-chabernac.eu.auth0.com/authorize?response_type=code&client_id=V5toQWdVGflZKYk7sqhi2TvPAxNUAyqA&redirect_uri=https://www.maxxq.org/callback.html&scope=read:logs&audience=urn:axa:axabe:auth0:testapi:uri&state=STATE">Authorization
-		code flow</a>
 
-	Authorize endpoint: <input type="text" size="128" id="authorize_endpoint">
-    Token endpoint <input type="text" size="128" id="token_endpoint">
-	Client id: <input type="text" size="128" id="clientid">
-	Secret: <input type="text" size="128" id="secret">
-	Redirect url: <input type="text" size="128" id="redirect_url">
-	Audience: <input type="text" size="128" id="audience">
-	Scope: <input type="text" size="128" id="scope">
-	
-	<button onClick="authorize()">Authorize</button>
-
-	<script>
-		function getInput(field) {
-			return document.getElementById(field).value;
-		}
-		
-		function setInput(field, value){
-			document.getElementById(field).value = value;
-		}
-		
-		function loadFromCookie(){
-			setInput("clientid", getCookie("clientid"));
-			setInput("secret", getCookie("secret"));
-			setInput("redirect_url", getCookie("redirect_url"));
-			setInput("authorize_endpoint", getCookie("authorize_endpoint"));
-			setInput("token_endpoint", getCookie("token_endpoint"));
-			setInput("audience", getCookie("audience"));
-			setInput("scope", getCookie("scope"));
-		}
-		
-		function storeInCookie(){
-			document.cookie = "clientid=" + getInput("clientid") + ";domain=.maxxq.org;path=/";
-			document.cookie = "secret=" + getInput("secret") + ";domain=.maxxq.org;path=/";
-			document.cookie = "redirect_url=" + getInput("redirect_url") + ";domain=.maxxq.org;path=/";
-			document.cookie = "token_endpoint=" + getInput("token_endpoint") + ";domain=.maxxq.org;path=/";
-			document.cookie = "authorize_endpoint=" + getInput("authorize_endpoint") + ";domain=.maxxq.org;path=/";
-			document.cookie = "audience=" + getInput("audience") + ";domain=.maxxq.org;path=/";
-			document.cookie = "scope=" + getInput("scope") + ";domain=.maxxq.org;path=/";
-		}
-		
-		function getCookie(name) {
-       	  const value = `; ${document.cookie}`;
-       	  const parts = value.split(`; ${name}=`);
-       	  if (parts.length === 2) return parts.pop().split(';').shift();
-        }
-
-
-		function authorize() {
-			storeInCookie();
-			window.location.href = getInput("authorize_endpoint") +  "?response_type=code"
-					+ "&client_id=" + getInput("clientid")
-					+ "&redirect_uri=" + getInput("redirect_url")
-					+ "&audience=" + getInput("audience")
-					+ "&scope=" + getInput("scope");
-		}
-	</script>
+<body>
+    <div>v1.1.6</div>
+    <a href="authorizationcodeflow.html">Authorization code flow</a>
 </body>
+
 </html>
