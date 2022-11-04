@@ -20,7 +20,7 @@ input, a {
 		value="https://dev-chabernac.eu.auth0.com/authorize">
     Token endpoint <input type="text" size="128" id="token_endpoint"
 		value="https://dev-chabernac.eu.auth0.com/oauth/token">
-	Client id: <input type="text" size="128" id="client" value="V5toQWdVGflZKYk7sqhi2TvPAxNUAyqA">
+	Client id: <input type="text" size="128" id="clientid" value="V5toQWdVGflZKYk7sqhi2TvPAxNUAyqA">
 	Secret: <input type="text" size="128" id="secret" value="o8IQSja5NW-YQZQbXJTk1rsiP6o5vPycG07hsx3ni0sOEhppiYP4Oz4UeHLNkIFQ">
 	Redirect url: <input type="text" size="128" id="redirect_url" value="https://www.maxxq.org/callback.html">
 	Audience: <input type="text" size="128" id="audience" value="urn:axa:axabe:auth0:testapi:uri">
@@ -38,9 +38,9 @@ input, a {
 		}
 		
 		function loadFromCookie(){
-			setInput("client", getCookie("cliendid"));
+			setInput("clientid", getCookie("cliendid"));
 			setInput("secret", getCookie("secret"));
-			setInput("redirect_url", getCookie("recirect_url"));
+			setInput("redirect_url", getCookie("redirect_url"));
 			setInput("authorize_endpoint", getCookie("authorize_endpoint"));
 			setInput("token_endpoint", getCookie("token_endpoint"));
 			setInput("audience", getCookie("audience"));
@@ -48,7 +48,7 @@ input, a {
 		}
 		
 		function storeInCookie(){
-			document.cookie = "clientid=" + getInput("client") + ";domain=.maxxq.org;path=/";
+			document.cookie = "clientid=" + getInput("clientid") + ";domain=.maxxq.org;path=/";
 			document.cookie = "secret=" + getInput("secret") + ";domain=.maxxq.org;path=/";
 			document.cookie = "redirect_url=" + getInput("redirect_url") + ";domain=.maxxq.org;path=/";
 			document.cookie = "token_endpoint=" + getInput("token_endpoint") + ";domain=.maxxq.org;path=/";
@@ -67,7 +67,7 @@ input, a {
 		function authorize() {
 			storeInCookie();
 			window.location.href = getInput("authorize_endpoint") +  "?response_type=code"
-					+ "&client_id=" + getInput("client")
+					+ "&client_id=" + getInput("clientid")
 					+ "&redirect_uri=" + getInput("redirect_url")
 					+ "&audience=" + getInput("audience")
 					+ "&scope=" + getInput("scope");
