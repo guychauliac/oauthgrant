@@ -40,8 +40,10 @@ input, a {
             }
             
             function setToken(token){
+            	var accessTokenReponse = JSON.parse(token);
+            	var accessToken = accessTokenReponse.access_token;
             	setField("token", token);
-            	var tokenParts = token.split('.');
+            	var tokenParts = accessToken.split('.');
             	var jwtHeader = tokenParts[0];
             	var jwtBody = tokenParts[1];
             	var jwtSignature = tokenParts[2];
