@@ -28,9 +28,9 @@
             }
             if (fields.code) {
                 setField("code", fields.code);
-                var storedAccessToken = getCookie(fields.code);
-                if (storedAccessToken) {
-                    tokenReceived(code, JSON.parse(storedAccessToken));
+                var storedAccessTokenResponse = getCookie(fields.code);
+                if (storedAccessTokenResponse) {
+                    processReceivedResponse(fields.code, JSON.parse(storedAccessTokenResponse));
                 } else {
                     getAccessTokenFromAuthorizationServer(fields.code);
                 }
@@ -63,7 +63,7 @@
                 body: 'grant_type=authorization_code&client_id=' + getCookie("clientid") + '&client_secret=' + getCookie("secret") + '&code=' + code + '&redirect_uri=' + getCookie("redirect_url")
             })
                 .then(response => response.json())
-                .then(response => tokenReceived(code, response))
+                .then(response => processReceivedResponse(code, response))
         }
 
         function setField(field, value) {
@@ -71,7 +71,7 @@
         }
 
 
-        function tokenReceived(authorizationcode, accessTokenReponse) {
+        function processReceivedResponse(authorizationcode, accessTokenReponse) {
             var accessTokenAsString = JSON.stringify(accessTokenReponse);
             setField("token", accessTokenAsString);
             storeInCookie(authorizationcode, accessTokenAsString);
