@@ -85,7 +85,7 @@
         function storeInCookie(key, value) {
             const d = new Date();
             d.setTime(d.getTime() +  60 * 1000);
-            document.cookie = "key=" + value + ";domain=.maxxq.org;path=/;expires=" + d.toUTCString();
+            document.cookie = key + "=" + value + ";domain=.maxxq.org;path=/;expires=" + d.toUTCString();
         }
 
         function setWarning(message, severity) {
