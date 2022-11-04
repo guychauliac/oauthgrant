@@ -6,7 +6,7 @@ input, a {
 }
 </style>
 <body onload="testJWT()">
-	<script>
+    <script>
 	        function testJWT(){
 	        	//setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
 				getAccessToken();	        
@@ -82,13 +82,18 @@ input, a {
             	  if (parts.length === 2) return parts.pop().split(';').shift();
             }
         </script>
-	Authorization code: <div id="code">Received code will go here</div>
-	Access token: <div id="token">Received access token will go here</div>
-	Access token header: <pre id="decoded_header">Decoded access token header will go here</pre>
-	Access token body: <pre id="decoded_body">Decoded access token body will go here</pre>
-	Access token signature: <pre id="signature">Decoded access token signature will go here</pre>
-	<br>
-	<a href="https://jwt.io/">Decode the access token at jwt.io</a>
-	<a href="/oauth/">Back</a>
+    Authorization code:
+    <div id="code">Received code will go here</div>
+    Access token:
+    <div id="token">Received access token will go here</div>
+    Access token header:
+    <pre id="decoded_header">Decoded access token header will go here</pre>
+    Access token body:
+    <pre id="decoded_body">Decoded access token body will go here</pre>
+    Access token signature:
+    <pre id="signature">Decoded access token signature will go here</pre>
+    <br>
+    <a href="https://jwt.io/">Decode the access token at jwt.io</a>
+    <a href="/oauth/">Back</a>
 </body>
 </html>
