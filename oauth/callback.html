@@ -18,33 +18,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body onload="getAccessToken()">
+<body onload="onLoad()">
     <script>
-        function getAccessToken() {
-            if(checkForErrors()){
-                return;
+        function onLoad() {
+            var callbackurl = window.location.href;
+            var fields = getFieldsFromCallbackURL(callbackurl);
+            if (fields.error) {
+                setWarning("Error: " + fields.error + ", description: " + fields.description);
             }
-            
-            var code = getParameterByName("code");
-            
-            setField("code", code);
-            var storedAccessToken = getCookie(code);
-            if(storedAccessToken){
-                tokenReceived(code, JSON.parse(storedAccessToken));
-            } else {
-                getAccessTokenFromAuthorizationServer(code);
+            if (fields.code) {
+                setField("code", fields.code);
+                var storedAccessToken = getCookie(fields.code);
+                if (storedAccessToken) {
+                    tokenReceived(code, JSON.parse(storedAccessToken));
+                } else {
+                    getAccessTokenFromAuthorizationServer(fields.code);
+                }
             }
         }
-        
-        function checkForErrors(){
-            var error = getParameterByName("error");
-            var description = getParameterByName("error_description");
-            
-            if(error || description){
-                setWarning("Error: " + error + ", description: " + description, "warning");
-                return true;
-            }
-            return false;
+
+        function getFieldsFromCallbackURL(callbackUrl) {
+            return {
+                "error": getParameterByName("error", callbackUrl),
+                "description": getParameterByName("error_description", callbackUrl),
+                "code": getParameterByName("code", callbackUrl)
+            };
+        }
+
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
 
         function getAccessTokenFromAuthorizationServer(code) {
@@ -100,7 +107,7 @@
 
         function storeInCookie(key, value) {
             const d = new Date();
-            d.setTime(d.getTime() +  5 * 60 * 1000);
+            d.setTime(d.getTime() + 5 * 60 * 1000);
             document.cookie = key + "=" + value + ";domain=.maxxq.org;path=/;expires=" + d.toUTCString();
         }
 
@@ -117,16 +124,6 @@
         function beautify(jsonObject) {
             return JSON.stringify(jsonObject, null, 4);
         }
-
-        function getParameterByName(name, url = window.location.href) {
-            name = name.replace(/[\[\]]/g, '\\$&');
-            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
-
 
         function parseJwt(token) {
             var base64 = token.replace(/-/g, '+').replace(/_/g, '/');
