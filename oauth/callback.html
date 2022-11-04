@@ -21,7 +21,12 @@
 <body onload="getAccessToken()">
     <script>
         function getAccessToken() {
+            if(checkForErrors()){
+                return;
+            }
+            
             var code = getParameterByName("code");
+            
             setField("code", code);
             var storedAccessToken = getCookie(code);
             if(storedAccessToken){
@@ -29,6 +34,17 @@
             } else {
                 getAccessTokenFromAuthorizationServer(code);
             }
+        }
+        
+        function checkForErrors(){
+            var error = getParameterByName("error");
+            var description = getParameterByName("error_description");
+            
+            if(error || description){
+                setWarning("Error: " + error + ", description: " + description, "warning");
+                return true;
+            }
+            return false;
         }
 
         function getAccessTokenFromAuthorizationServer(code) {
