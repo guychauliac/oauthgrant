@@ -47,6 +47,10 @@
 			document.getElementById(field).value = value;
 		}
 
+		function setField(field, value) {
+            document.getElementById(field).textContent = value;
+        }
+
 		function loadFromCookie() {
 			setInput("clientid", getCookie("clientid"));
 			setInput("secret", getCookie("secret"));
@@ -92,7 +96,7 @@
 				+ getInput("redirect_url") + "&audience="
 				+ getInput("audience") + "&scope="
 				+ getInput("scope");
-			setInput("authrequest", authRequest);
+			setField("authrequest", authRequest);
 			return authRequest;
 		}
 
