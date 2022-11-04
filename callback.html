@@ -66,6 +66,7 @@ input, a {
             
             function parseJwt(token) {
                 var base64 = token.replace(/-/g, '+').replace(/_/g, '/');
+                console.log("base64 string: " + base64);
                 var base64decoded = window.atob(base64).split('').map(function(c) {
                     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
                 }).join('');
