@@ -5,12 +5,21 @@ input, a {
 	margin: 20px 0;
 }
 </style>
+
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="OAuth debugger">
+<meta name="keywords" content="OAuth debug jwt">
+<meta name="author" content="Guy Chauliac">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
 <body onload="getAccessToken()">
     <script>
             function getAccessToken(){
             	let mycookie = document.cookie;
                 var code = getParameterByName("code");
-                setCode(code);
+                setField("code", code);
                 getAccessTokenFromAuthorizationServer(code);
             }
             
@@ -23,19 +32,15 @@ input, a {
                     body: 'grant_type=authorization_code&client_id=' + getCookie("clientid") + '&client_secret=' + getCookie("secret") + '&code=' + code + '&redirect_uri=' + getCookie("redirect_url")
                 })
                 .then(response => response.json())
-                .then(response => setToken(JSON.stringify(response)))
+                .then(response => tokenReceived(response))
             }
             
             function setField(field, value){
     			document.getElementById(field).textContent = value;
     		}
   
-            function setCode(code){
-                document.getElementById("code").textContent = "Code: " + code;
-            }
             
-            function setToken(token){
-            	var accessTokenReponse = JSON.parse(token);
+            function tokenReceived(accessTokenReponse){
             	var accessToken = accessTokenReponse.access_token;
             	setField("token", token);
             	var tokenParts = accessToken.split('.');
