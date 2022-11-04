@@ -5,7 +5,7 @@ input, a {
 	margin: 20px 0;
 }
 </style>
-<body>
+<body onload="loadFromCookie()">
 	<a
 		href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/call-your-api-using-the-authorization-code-flow">Call
 		your api using the authorizaton code flow auth0</a>
@@ -32,13 +32,40 @@ input, a {
 		function getInput(field) {
 			return document.getElementById(field).value;
 		}
-
-
-		function authorize() {
+		
+		function setInput(field, value){
+			document.getElementById(field).value = value;
+		}
+		
+		function loadFromCookie(){
+			setInput("client", getCookie("cliendid"));
+			setInput("secret", getCookie("secret"));
+			setInput("redirect_url", getCookie("recirect_url"));
+			setInput("authorize_endpoint", getCookie("authorize_endpoint"));
+			setInput("token_endpoint", getCookie("token_endpoint"));
+			setInput("audience", getCookie("audience"));
+			setInput("scope", getCookie("scope"));
+		}
+		
+		function storeInCookie(){
 			document.cookie = "clientid=" + getInput("client") + ";domain=.maxxq.org;path=/";
 			document.cookie = "secret=" + getInput("secret") + ";domain=.maxxq.org;path=/";
 			document.cookie = "redirect_url=" + getInput("redirect_url") + ";domain=.maxxq.org;path=/";
 			document.cookie = "token_endpoint=" + getInput("token_endpoint") + ";domain=.maxxq.org;path=/";
+			document.cookie = "authorize_endpoint=" + getInput("authorize_endpoint") + ";domain=.maxxq.org;path=/";
+			document.cookie = "audience=" + getInput("audience") + ";domain=.maxxq.org;path=/";
+			document.cookie = "scope=" + getInput("scope") + ";domain=.maxxq.org;path=/";
+		}
+		
+		function getCookie(name) {
+       	  const value = `; ${document.cookie}`;
+       	  const parts = value.split(`; ${name}=`);
+       	  if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+
+		function authorize() {
+			storeInCookie();
 			window.location.href = getInput("authorize_endpoint") +  "?response_type=code"
 					+ "&client_id=" + getInput("client")
 					+ "&redirect_uri=" + getInput("redirect_url")
