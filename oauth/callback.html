@@ -49,9 +49,10 @@
 
 
         function tokenReceived(authorizationcode, accessTokenReponse) {
-            storeInCookie(authorizationcode, JSON.stringify(accessTokenReponse));
+            var accessTokenAsString = JSON.stringify(accessTokenReponse);
+            setField("token", accessTokenAsString);
+            storeInCookie(authorizationcode, accessTokenAsString);
             var accessToken = accessTokenReponse.access_token;
-            setField("token", token);
             var tokenParts = accessToken.split('.');
             var jwtHeader = parseJwt(tokenParts[0]);
             var jwtBody = parseJwt(tokenParts[1]);
