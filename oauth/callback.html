@@ -38,7 +38,7 @@
         
         function checkForErrors(){
             var error = getParameterByName("error");
-            var description = getParameterByName("error_description");
+            var description = decodeURIComponent(getParameterByName("error_description"));
             
             if(error || description){
                 setWarning("Error: " + error + ", description: " + description, "warning");
