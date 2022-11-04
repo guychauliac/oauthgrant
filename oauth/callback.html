@@ -54,11 +54,15 @@ input, a {
             }
             
             function validateMatchingScopes(jwtBody){
-            	var authorizedscopes = jwtBody.scope.split(" ");
-            	var requestedscopes = getCookie("scope").split(" ");
+            	if(!jwtBody.scope){
+            		setField("matchingscopes", "No scopes where authorized!");
+            	}
+            	
+            	var authorizedScopes = jwtBody.scope.split(" ");
+            	var requestedScopes = getCookie("scope").split(" ");
             	
             	var notAuthorizedScopes = requestedScopes.filter(function(scope){
-            		return !authorizedscopes.includes(scope);
+            		return !authorizedScopes.includes(scope);
             	});
 
             	if(notAuthorizedScopes.length > 0){
@@ -106,7 +110,7 @@ input, a {
     <pre id="decoded_body">Decoded access token body will go here</pre>
     Access token signature:
     <pre id="signature">Decoded access token signature will go here</pre>
-    <div id="matchingscopes">Result of matching scopes</div>
+    <div class="w3-panel w3-pale-red w3-border" id="matchingscopes">Result of matching scopes</div>
     <a href="https://jwt.io/">Decode the access token at jwt.io</a>
     <a href="/oauth/">Back</a>
 </body>
