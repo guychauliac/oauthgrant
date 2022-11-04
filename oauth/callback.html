@@ -91,10 +91,10 @@
         function setWarning(message, severity) {
             setField("warning", message);
             if (severity == "warning") {
-                document.getElementById("warning").style = "w3-panel w3-pale-red w3-border";
+                document.getElementById("warning").className = "w3-panel w3-pale-red w3-border";
             }
             if (severity == "info") {
-                document.getElementById("warning").style = "w3-panel w3-green w3-border";
+                document.getElementById("warning").className = "w3-panel w3-green w3-border";
             }
         }
 
