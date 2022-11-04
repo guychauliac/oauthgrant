@@ -44,12 +44,26 @@ input, a {
             	var accessToken = accessTokenReponse.access_token;
             	setField("token", token);
             	var tokenParts = accessToken.split('.');
-            	var jwtHeader = tokenParts[0];
-            	var jwtBody = tokenParts[1];
+            	var jwtHeader = parseJwt(tokenParts[0]);
+            	var jwtBody = parseJwt(tokenParts[1]);
             	var jwtSignature = tokenParts[2];
-            	setField("decoded_header", beautify(parseJwt(jwtHeader)));
-            	setField("decoded_body", beautify(parseJwt(jwtBody)));
+            	setField("decoded_header", beautify(jwtHeader));
+            	setField("decoded_body", beautify(jwtBody));
             	setField("signature", jwtSignature);
+            	validateMatchingScopes(jwtBody);
+            }
+            
+            function validateMatchingScopes(jwtBody){
+            	var authorizedscopes = jwtBody.scope.split(" ");
+            	var requestedscopes = getCookie("scope").split(" ");
+            	
+            	var notAuthorizedScopes = requestedScopes.filter(function(scope){
+            		return !authorizedscopes.includes(scope);
+            	});
+
+            	if(notAuthorizedScopes.length > 0){
+                    setField("matchingscopes", "Some scopes where not authorized: " + notAuthorizedScopes);
+                }
             }
             
             function beautify(jsonObject){
@@ -92,7 +106,7 @@ input, a {
     <pre id="decoded_body">Decoded access token body will go here</pre>
     Access token signature:
     <pre id="signature">Decoded access token signature will go here</pre>
-    <br>
+    <div id="matchingscopes">Result of matching scopes</div>
     <a href="https://jwt.io/">Decode the access token at jwt.io</a>
     <a href="/oauth/">Back</a>
 </body>
