@@ -3,118 +3,131 @@
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
-input, a {
-	display: block;
-	margin: 20px 0;
-}
+    input,
+    a {
+        display: block;
+        margin: 20px 0;
+    }
 </style>
 
 <head>
-<meta charset="UTF-8">
-<meta name="description" content="OAuth debugger">
-<meta name="keywords" content="OAuth debug jwt">
-<meta name="author" content="Guy Chauliac">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="description" content="OAuth debugger">
+    <meta name="keywords" content="OAuth debug jwt">
+    <meta name="author" content="Guy Chauliac">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body onload="getAccessToken()">
     <script>
-            function getAccessToken(){
-            	let mycookie = document.cookie;
-                var code = getParameterByName("code");
-                setField("code", code);
+        function getAccessToken() {
+            let mycookie = document.cookie;
+            var code = getParameterByName("code");
+            setField("code", code);
+            var storedAccessToken = getCookie(code);
+            if(storedAccessToken){
+                tokenReceived(code, storedAccessToken);
+            } else {
                 getAccessTokenFromAuthorizationServer(code);
             }
-            
-            function getAccessTokenFromAuthorizationServer(code){
-            	fetch(getCookie("token_endpoint"), {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: 'grant_type=authorization_code&client_id=' + getCookie("clientid") + '&client_secret=' + getCookie("secret") + '&code=' + code + '&redirect_uri=' + getCookie("redirect_url")
-                })
+        }
+
+        function getAccessTokenFromAuthorizationServer(code) {
+            fetch(getCookie("token_endpoint"), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'grant_type=authorization_code&client_id=' + getCookie("clientid") + '&client_secret=' + getCookie("secret") + '&code=' + code + '&redirect_uri=' + getCookie("redirect_url")
+            })
                 .then(response => response.json())
-                .then(response => tokenReceived(response))
-            }
-            
-            function setField(field, value){
-    			document.getElementById(field).textContent = value;
-    		}
-  
-            
-            function tokenReceived(accessTokenReponse){
-            	var accessToken = accessTokenReponse.access_token;
-            	setField("token", token);
-            	var tokenParts = accessToken.split('.');
-            	var jwtHeader = parseJwt(tokenParts[0]);
-            	var jwtBody = parseJwt(tokenParts[1]);
-            	var jwtSignature = tokenParts[2];
-            	setField("decoded_header", beautify(jwtHeader));
-            	setField("decoded_body", beautify(jwtBody));
-            	setField("signature", jwtSignature);
-            	validateMatchingScopes(jwtBody);
-            }
-            
-            function validateMatchingScopes(jwtBody){
-            	if(!jwtBody.scope){
-            		setWarning("No scopes where authorized!", "warning");
-            	}
-            	
-            	var authorizedScopes = jwtBody.scope.split(" ");
-            	var requestedScopes = getCookie("scope").split(" ");
-            	
-            	var notAuthorizedScopes = requestedScopes.filter(function(scope){
-            		return !authorizedScopes.includes(scope);
-            	});
+                .then(response => tokenReceived(code, response))
+        }
 
-            	if(notAuthorizedScopes.length > 0){
-                    setWarning( "Some scopes where not authorized: " + notAuthorizedScopes, "warning");
-                } else {
-                    setWarning("All scopes where authorized", "info");
-                }
+        function setField(field, value) {
+            document.getElementById(field).textContent = value;
+        }
+
+
+        function tokenReceived(authorizationcode, accessTokenReponse) {
+            storeInCookie(authorizationcode, accessTokenReponse);
+            var accessToken = accessTokenReponse.access_token;
+            setField("token", token);
+            var tokenParts = accessToken.split('.');
+            var jwtHeader = parseJwt(tokenParts[0]);
+            var jwtBody = parseJwt(tokenParts[1]);
+            var jwtSignature = tokenParts[2];
+            setField("decoded_header", beautify(jwtHeader));
+            setField("decoded_body", beautify(jwtBody));
+            setField("signature", jwtSignature);
+            validateMatchingScopes(jwtBody);
+        }
+
+        function validateMatchingScopes(jwtBody) {
+            if (!jwtBody.scope) {
+                setWarning("No scopes where authorized!", "warning");
             }
 
-            function setWarning(message, severity){
-                setField("warning", message);
-                if(severity == "warning"){
-                    document.getElementById("warning").style="w3-panel w3-pale-red w3-border";
-                }
-                if(severity == "info"){
-                    document.getElementById("warning").style="w3-panel w3-green w3-border";
-                }
-            }
-            
-            function beautify(jsonObject){
-                return  JSON.stringify(jsonObject, null, 4);
-            }
+            var authorizedScopes = jwtBody.scope.split(" ");
+            var requestedScopes = getCookie("scope").split(" ");
 
-            function getParameterByName(name, url = window.location.href) {
-                name = name.replace(/[\[\]]/g, '\\$&');
-                var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                    results = regex.exec(url);
-                if (!results) return null;
-                if (!results[2]) return '';
-                return decodeURIComponent(results[2].replace(/\+/g, ' '));
+            var notAuthorizedScopes = requestedScopes.filter(function (scope) {
+                return !authorizedScopes.includes(scope);
+            });
+
+            if (notAuthorizedScopes.length > 0) {
+                setWarning("Some scopes where not authorized: " + notAuthorizedScopes, "warning");
+            } else {
+                setWarning("All scopes where authorized", "info");
             }
-            
-            
-            function parseJwt(token) {
-                var base64 = token.replace(/-/g, '+').replace(/_/g, '/');
-                console.log("base64 string: " + base64);
-                var base64decoded = window.atob(base64).split('').map(function(c) {
-                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                }).join('');
-                var jsonPayload = decodeURIComponent(base64decoded);
-                return JSON.parse(jsonPayload);
+        }
+
+        function storeInCookie(key, value) {
+            const d = new Date();
+            d.setTime(d.getTime() +  60 * 1000);
+            document.cookie = "key=" + value + ";domain=.maxxq.org;path=/;expires=" + d.toUTCString();
+        }
+
+        function setWarning(message, severity) {
+            setField("warning", message);
+            if (severity == "warning") {
+                document.getElementById("warning").style = "w3-panel w3-pale-red w3-border";
             }
-            
-            function getCookie(name) {
-            	  const value = `; ${document.cookie}`;
-            	  const parts = value.split(`; ${name}=`);
-            	  if (parts.length === 2) return parts.pop().split(';').shift();
+            if (severity == "info") {
+                document.getElementById("warning").style = "w3-panel w3-green w3-border";
             }
-        </script>
+        }
+
+        function beautify(jsonObject) {
+            return JSON.stringify(jsonObject, null, 4);
+        }
+
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+
+        function parseJwt(token) {
+            var base64 = token.replace(/-/g, '+').replace(/_/g, '/');
+            console.log("base64 string: " + base64);
+            var base64decoded = window.atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join('');
+            var jsonPayload = decodeURIComponent(base64decoded);
+            return JSON.parse(jsonPayload);
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+    </script>
     Authorization code:
     <div id="code">Received code will go here</div>
     Access token:
@@ -126,8 +139,9 @@ input, a {
     Access token signature:
     <pre id="signature">Decoded access token signature will go here</pre>
     <div id="warning" class="w3-panel w3-pale-red w3-border" id="warning">Result of matching scopes</div>
-    
+
     <a href="https://jwt.io/">Decode the access token at jwt.io</a>
     <a href="/oauth/">Back</a>
 </body>
+
 </html>
