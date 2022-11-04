@@ -34,7 +34,7 @@ input, a {
             
             function setToken(token){
                 document.getElementById("token").textContent = "Token: " + token;
-                //setDecodedToken(parseJwt(token));
+                setDecodedToken(parseJwt(token));
             }
             
             function setDecodedToken(token){
