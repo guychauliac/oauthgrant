@@ -26,65 +26,62 @@
 			your api using the authorizaton code flow auth0</a>
 
 
-		<form>
-			<div class="form-group">
-				<label for="grantType">Grant type</label>
-				<select class="custom-select" id="grantType" aria-describedby="grantTypeHelp" placeholder="Enter grant type">
-					<option selected value="1">Authrorization code flow</option>
-				</select>
-				<small id="grantTypeHelp" class="form-text text-muted"></small>
-			</div>
+		<div class="form-group">
+			<label for="grantType">Grant type</label>
+			<select class="custom-select" id="grantType" aria-describedby="grantTypeHelp" placeholder="Enter grant type">
+				<option selected value="1">Authrorization code flow</option>
+			</select>
+			<small id="grantTypeHelp" class="form-text text-muted"></small>
+		</div>
 
-			<div class="form-group">
-				<label for="authorize_endpoint">Authorize endpoint</label>
-				<input type="text" class="form-control" id="authorize_endpoint" aria-describedby="authorizationEndpointHelp" placeholder="Enter authorization endpoint">
-				<small id="authorizationEndpointHelp" class="form-text text-muted"></small>
-			</div>
+		<div class="form-group">
+			<label for="authorize_endpoint">Authorize endpoint</label>
+			<input type="text" class="form-control" id="authorize_endpoint" aria-describedby="authorizationEndpointHelp" placeholder="Enter authorization endpoint">
+			<small id="authorizationEndpointHelp" class="form-text text-muted"></small>
+		</div>
 
-			<div class="form-group">
-				<label for="token_endpoint">Token endpoint</label>
-				<input type="text" class="form-control" id="token_endpoint" aria-describedby="tokenEndpointHelp" placeholder="Enter token endpoint">
-				<small id="tokenEndpointHelp" class="form-text text-muted"></small>
-			</div>
+		<div class="form-group">
+			<label for="token_endpoint">Token endpoint</label>
+			<input type="text" class="form-control" id="token_endpoint" aria-describedby="tokenEndpointHelp" placeholder="Enter token endpoint">
+			<small id="tokenEndpointHelp" class="form-text text-muted"></small>
+		</div>
 
-			<div class="form-group">
-				<label for="clientid">Client id</label>
-				<input type="text" class="form-control" id="clientid" aria-describedby="clientIdHelp" placeholder="Enter client id">
-				<small id="clientIdHelp" class="form-text text-muted"></small>
-			</div>
+		<div class="form-group">
+			<label for="clientid">Client id</label>
+			<input type="text" class="form-control" id="clientid" aria-describedby="clientIdHelp" placeholder="Enter client id">
+			<small id="clientIdHelp" class="form-text text-muted"></small>
+		</div>
 
-			<div class="form-group">
-				<label for="secret">Secret</label>
-				<input type="text" class="form-control" id="secret" aria-describedby="secretHelp" placeholder="Enter secret">
-				<small id="secretHelp" class="form-text text-muted"></small>
-			</div>
+		<div class="form-group">
+			<label for="secret">Secret</label>
+			<input type="text" class="form-control" id="secret" aria-describedby="secretHelp" placeholder="Enter secret">
+			<small id="secretHelp" class="form-text text-muted"></small>
+		</div>
 
-			<div class="form-group">
-				<label for="redirect_url">Redirect url</label>
-				<input type="text" class="form-control" id="redirect_url" aria-describedby="redirectURLHelp" placeholder="Enter redirect url">
-				<small id="redirectURLHelp" class="form-text text-muted"></small>
-			</div>
+		<div class="form-group">
+			<label for="redirect_url">Redirect url</label>
+			<input type="text" class="form-control" id="redirect_url" aria-describedby="redirectURLHelp" placeholder="Enter redirect url">
+			<small id="redirectURLHelp" class="form-text text-muted"></small>
+		</div>
 
-			<div class="form-group">
-				<label for="audience">Audience</label>
-				<input type="text" class="form-control" id="audience" aria-describedby="audienceHelp" placeholder="Enter audience">
-				<small id="audienceHelp" class="form-text text-muted"></small>
-			</div>
+		<div class="form-group">
+			<label for="audience">Audience</label>
+			<input type="text" class="form-control" id="audience" aria-describedby="audienceHelp" placeholder="Enter audience">
+			<small id="audienceHelp" class="form-text text-muted"></small>
+		</div>
 
-			<div class="form-group">
-				<label for="scope">Scope</label>
-				<input type="text" class="form-control" id="scope" aria-describedby="scopeHelp" placeholder="Enter scope">
-				<small id="scopeHelp" class="form-text text-muted"></small>
-			</div>
+		<div class="form-group">
+			<label for="scope">Scope</label>
+			<input type="text" class="form-control" id="scope" aria-describedby="scopeHelp" placeholder="Enter scope">
+			<small id="scopeHelp" class="form-text text-muted"></small>
+		</div>
 
-			<div>
-				<label for="authrequest">Authorization request</label>
-				<pre id="authrequest"></pre>
-			</div>
-			<button onClick="authorize()">Authorize</button>
-			<button onClick="createRequest()">Show authorization request</button>
-		</form>
-
+		<div>
+			<label for="authrequest">Authorization request</label>
+			<pre id="authrequest"></pre>
+		</div>
+		<button onClick="authorize()">Authorize</button>
+		<button onClick="createRequest()">Show authorization request</button>
 
 		<a href="/oauth/">Back</a>
 	</div>
