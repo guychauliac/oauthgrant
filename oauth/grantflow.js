@@ -1,7 +1,7 @@
 const fieldsPerGrant = {
     "all": ["authorize_endpoint", "token_endpoint", "clientid", "secret", "audience", "scope", "redirect_url"],
     "authorizationCode": ["authorize_endpoint", "token_endpoint", "clientid", "secret", "audience", "scope", "redirect_url"],
-    "clientCredential": ["authorize_endpoint", "token_endpoint", "clientid", "secret", "audience", "scope"],
+    "clientCredential": ["token_endpoint", "clientid", "secret", "audience", "scope"],
 };
 
 function getInput(field) {
