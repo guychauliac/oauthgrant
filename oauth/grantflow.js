@@ -54,7 +54,7 @@ function getCookie(name) {
         return parts.pop().split(';').shift();
 }
 
-function createRequest(){
+function createRequest() {
     var authRequest = getInput("authorize_endpoint")
         + "?response_type=code" + "&client_id="
         + getInput("clientid") + "&redirect_uri="
@@ -65,24 +65,47 @@ function createRequest(){
     return authRequest;
 }
 
-function setEnabled(field, isEnabled){
+function setEnabled(field, isEnabled) {
     document.getElementById(field).disabled = !isEnabled;
 }
 
-function grantSelected(){
+function grantSelected() {
     var grant = getInput("grantType");
 
-    fieldsPerGrant.all.forEach(function(field){
+    fieldsPerGrant.all.forEach(function (field) {
         setEnabled(field, false);
-    }); 
-    fieldsPerGrant[grant].forEach(function(field){
+    });
+    fieldsPerGrant[grant].forEach(function (field) {
         setEnabled(field, true);
-    }); 
+    });
 
 }
 
 function authorize() {
     storeInCookie();
-    
+
     window.location.href = createRequest();
+}
+
+function callAuthorizationServer() {
+    fetch(getField("token_endpoint"), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'grant_type=client_credentials&client_id=' + getField("clientid") + '&client_secret=' + getField("secret") + '&audience=' + getField("audience") + '&scope=' + getField("scope")
+    })
+        .then(response => response.json())
+        .then(response => processReceivedResponse(response))
+}
+
+function processReceivedResponse(reponse){
+    storeInCookie("client_credential", response)
+    window.location.href="/callback.html?code=client_credential";
+}
+
+function storeInCookie(key, value) {
+    const d = new Date();
+    d.setTime(d.getTime() + 5 * 60 * 1000);
+    document.cookie = key + "=" + value + ";domain=.maxxq.org;path=/;expires=" + d.toUTCString();
 }
