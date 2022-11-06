@@ -49,11 +49,11 @@ function setField(field, value) {
 }
 
 
-function processReceivedResponse(authorizationcode, accessTokenReponse) {
-    var accessTokenAsString = JSON.stringify(accessTokenReponse);
+function processReceivedResponse(authorizationcode, accessTokenResponse) {
+    var accessTokenAsString = JSON.stringify(accessTokenResponse, null, 4);
     setField("token", accessTokenAsString);
     storeInCookie(authorizationcode, accessTokenAsString);
-    showAccessTokenFields(accessTokenReponse);
+    showAccessTokenFields(accessTokenResponse);
 }
 
 function showAccessTokenFields(accessTokenReponse){
