@@ -32,67 +32,68 @@
 	<div class="container">
 		<div class="form-group">
 			<label for="grantType">Grant type</label>
-			<select class="custom-select" id="grantType" aria-describedby="grantTypeHelp" placeholder="Enter grant type">
-				<option selected value="1">Authorization code flow</option>
+			<select onchange="grantSelected()" class="custom-select" id="grantType" aria-describedby="grantTypeHelp" placeholder="Enter grant type">
+				<option selected value="authorizationCode">Authorization code flow</option>
+				<option selected value="clientCredential">Client credential flow</option>
 			</select>
 			<small id="grantTypeHelp" class="form-text text-muted"></small>
 		</div>
 
 		<div class="form-group">
-			<label for="authorize_endpoint">Authorize endpoint</label>
+			<label for="authorize_endpoint">Authorization endpoint</label>
 			<input type="text" class="form-control" id="authorize_endpoint" aria-describedby="authorizationEndpointHelp" placeholder="Enter authorization endpoint">
-			<small id="authorizationEndpointHelp" class="form-text text-muted"></small>
+			<small id="authorizationEndpointHelp" class="form-text text-muted">Authorization endpoint url</small>
 		</div>
 
 		<div class="form-group">
 			<label for="token_endpoint">Token endpoint</label>
 			<input type="text" class="form-control" id="token_endpoint" aria-describedby="tokenEndpointHelp" placeholder="Enter token endpoint">
-			<small id="tokenEndpointHelp" class="form-text text-muted"></small>
+			<small id="tokenEndpointHelp" class="form-text text-muted">Token endpoint url</small>
 		</div>
 
 		<div class="form-group">
 			<label for="clientid">Client id</label>
 			<input type="text" class="form-control" id="clientid" aria-describedby="clientIdHelp" placeholder="Enter client id">
-			<small id="clientIdHelp" class="form-text text-muted"></small>
+			<small id="clientIdHelp" class="form-text text-muted">Client id</small>
 		</div>
 
 		<div class="form-group">
 			<label for="secret">Secret</label>
 			<input type="text" class="form-control" id="secret" aria-describedby="secretHelp" placeholder="Enter secret">
-			<small id="secretHelp" class="form-text text-muted"></small>
+			<small id="secretHelp" class="form-text text-muted">Client secret</small>
 		</div>
 
 		<div class="form-group">
 			<label for="redirect_url">Redirect url</label>
 			<input type="text" class="form-control" id="redirect_url" aria-describedby="redirectURLHelp" placeholder="Enter redirect url">
-			<small id="redirectURLHelp" class="form-text text-muted"></small>
+			<small id="redirectURLHelp" class="form-text text-muted">Redirect url that will be invoked after authorization</small>
 		</div>
 
 		<div class="form-group">
 			<label for="audience">Audience</label>
 			<input type="text" class="form-control" id="audience" aria-describedby="audienceHelp" placeholder="Enter audience">
-			<small id="audienceHelp" class="form-text text-muted"></small>
+			<small id="audienceHelp" class="form-text text-muted">Audience to which access is requested</small>
 		</div>
 
 		<div class="form-group">
 			<label for="scope">Scope</label>
 			<input type="text" class="form-control" id="scope" aria-describedby="scopeHelp" placeholder="Enter scope">
-			<small id="scopeHelp" class="form-text text-muted"></small>
+			<small id="scopeHelp" class="form-text text-muted">Scope to which access is requested</small>
 		</div>
 
 		<div>
 			<label for="authrequest">Authorization request</label>
-			<pre id="authrequest"></pre>
+			<textarea disabled class="form-control" id="authrequest"></textarea>
 		</div>
-		<button class="btn btn-primary" onClick="authorize()">Authorize</button>
-		<button class="btn btn-primary" onClick="createRequest()">Show authorization request</button>
 
-		<a class="btn btn-info" href="/oauth/">Back</a>
-
-		<p></p>
+		<div class="panel">
+			<button class="btn btn-primary" onClick="authorize()">Authorize</button>
+			<button class="btn btn-primary" onClick="createRequest()">Show authorization request</button>
+			<a class="btn btn-info" href="/oauth/">Back</a>
+		</div>
 	</div>
 
-	<div class="panel-footer text-right">v1.9.4</div>
+	<div class="panel-footer text-right">v1.9.5</div>
 </body>
 
 </html>

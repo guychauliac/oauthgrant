@@ -1,3 +1,9 @@
+const fieldsPerGrant = {
+    "all": ["authorize_endpoint", "token_endpoint", "clientid", "secret", "audience", "scope", "redirect_url"],
+    "authorizationCode": ["authorize_endpoint", "token_endpoint", "clientid", "secret", "audience", "scope", "redirect_url"],
+    "clientCredential": ["authorize_endpoint", "token_endpoint", "clientid", "secret", "audience", "scope"],
+};
+
 function getInput(field) {
     return document.getElementById(field).value;
 }
@@ -57,6 +63,22 @@ function createRequest(){
         + getInput("scope");
     setField("authrequest", authRequest);
     return authRequest;
+}
+
+function setEnabled(field, isEnabled){
+    document.getElementById(field).disabled = !isEnabled;
+}
+
+function grantSelected(){
+    var grant = getInput("grantType");
+
+    fieldsPerGrant.all.forEach(function(field){
+        setEnabled(field, false);
+    }); 
+    fieldsPerGrant[grant].forEach(function(field){
+        setEnabled(field, true);
+    }); 
+
 }
 
 function authorize() {
