@@ -17,23 +17,41 @@
     <meta name="author" content="Guy Chauliac">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="callback.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 
 <body onload="onLoad()">
-    Authorization code:
-    <div id="code">Received code will go here</div>
-    Access token:
-    <div id="token">Received access token will go here</div>
-    Access token header:
-    <pre id="decoded_header">Decoded access token header will go here</pre>
-    Access token body:
-    <pre id="decoded_body">Decoded access token body will go here</pre>
-    Access token signature:
-    <pre id="signature">Decoded access token signature will go here</pre>
-    <div id="warning" class="w3-panel w3-pale-red w3-border" id="warning">Result of matching scopes</div>
+    <div class="container">
+        <div>
+			<label for="code">Authorization code</label>
+			<pre id="code"></pre>
+		</div>
 
-    <a href="https://jwt.io/">Decode the access token at jwt.io</a>
-    <a href="/oauth/">Back</a>
+        <div>
+			<label for="token">Access token</label>
+			<pre id="token"></pre>
+		</div>
+
+        <div>
+			<label for="decoded_header">Access token header</label>
+			<pre id="decoded_header"></pre>
+		</div>
+
+        <div>
+			<label for="decoded_body">Access token body</label>
+			<pre id="decoded_body"></pre>
+		</div>
+
+        <div>
+			<label for="signature">Access token signature</label>
+			<pre id="signature"></pre>
+		</div>
+
+        <div id="warning" class="w3-panel w3-pale-red w3-border" id="warning">Result of matching scopes</div>
+
+        <a href="https://jwt.io/">Decode the access token at jwt.io</a>
+        <a href="/oauth/">Back</a>
+    </div>
 </body>
 
 </html>
