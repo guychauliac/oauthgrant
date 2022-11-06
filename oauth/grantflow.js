@@ -118,7 +118,7 @@ function callAuthorizationServer() {
 }
 
 function processReceivedResponse(response) {
-    storeInCookie("client_credential", response)
+    storeInCookie("client_credential", JSON.stringify(response))
     window.location.href = "/oauth/callback.html?code=client_credential";
 }
 
