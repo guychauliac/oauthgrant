@@ -55,14 +55,26 @@ function getCookie(name) {
 }
 
 function createRequest() {
-    var authRequest = getInput("authorize_endpoint")
-        + "?response_type=code" + "&client_id="
-        + getInput("clientid") + "&redirect_uri="
-        + getInput("redirect_url") + "&audience="
-        + getInput("audience") + "&scope="
-        + getInput("scope");
-    setField("authrequest", authRequest);
-    return authRequest;
+    var grant = getInput("grantType");
+
+    if (grant == "authorizationCode") {
+        var authRequest = getInput("authorize_endpoint")
+            + "?response_type=code" + "&client_id="
+            + getInput("clientid") + "&redirect_uri="
+            + getInput("redirect_url") + "&audience="
+            + getInput("audience") + "&scope="
+            + getInput("scope");
+        setField("authrequest", "Redirect to: " + authRequest);
+        return authRequest;
+    } else if (grant == "clientCredential") {
+        var authRequest = 'grant_type=client_credentials' 
+        + '&client_id=' + getInput("clientid") 
+        + '&client_secret=' + getInput("secret")  
+        + '&audience=' + getInput("audience") 
+        + '&scope=' + getInput("scope") 
+        setField("authrequest", "POST to:  " + getInput("token_endpoint") + " body: " + authRequest);
+        return authRequest;
+    }
 }
 
 function setEnabled(field, isEnabled) {
@@ -84,24 +96,30 @@ function grantSelected() {
 function authorize() {
     storeInCookie();
 
-    window.location.href = createRequest();
+    var grant = getInput("grantType");
+    if (grant == "authorizationCode") {
+        window.location.href = createRequest();
+    } else if (grant = "clientCredential") {
+        callAuthorizationServer();
+    }
+
 }
 
 function callAuthorizationServer() {
-    fetch(getField("token_endpoint"), {
+    fetch(getInput("token_endpoint"), {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: 'grant_type=client_credentials&client_id=' + getField("clientid") + '&client_secret=' + getField("secret") + '&audience=' + getField("audience") + '&scope=' + getField("scope")
+        body: createRequest()
     })
         .then(response => response.json())
         .then(response => processReceivedResponse(response))
 }
 
-function processReceivedResponse(reponse){
+function processReceivedResponse(response) {
     storeInCookie("client_credential", response)
-    window.location.href="/callback.html?code=client_credential";
+    window.location.href = "/oauth/callback.html?code=client_credential";
 }
 
 function storeInCookie(key, value) {
