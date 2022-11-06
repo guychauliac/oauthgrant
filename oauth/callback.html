@@ -21,31 +21,36 @@
 </head>
 
 <body onload="onLoad()">
+    <div class="jumbotron text-center">
+        <h1>OAuth/OpenID Connect response</h1>
+        <p>Inspect authorization code, access token and scopes</p>
+    </div>
+
     <div class="container">
         <div>
-			<label for="code">Authorization code</label>
-			<pre id="code"></pre>
-		</div>
+            <label for="code">Authorization code</label>
+            <pre id="code"></pre>
+        </div>
 
         <div>
-			<label for="token">Access token</label>
-			<pre id="token"></pre>
-		</div>
+            <label for="token">Access token</label>
+            <pre id="token"></pre>
+        </div>
 
         <div>
-			<label for="decoded_header">Access token header</label>
-			<pre id="decoded_header"></pre>
-		</div>
+            <label for="decoded_header">Access token header</label>
+            <pre id="decoded_header"></pre>
+        </div>
 
         <div>
-			<label for="decoded_body">Access token body</label>
-			<pre id="decoded_body"></pre>
-		</div>
+            <label for="decoded_body">Access token body</label>
+            <pre id="decoded_body"></pre>
+        </div>
 
         <div>
-			<label for="signature">Access token signature</label>
-			<pre id="signature"></pre>
-		</div>
+            <label for="signature">Access token signature</label>
+            <pre id="signature"></pre>
+        </div>
 
         <div id="warning" class="w3-panel w3-pale-red w3-border" id="warning">Result of matching scopes</div>
 

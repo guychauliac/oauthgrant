@@ -21,11 +21,12 @@
 
 <body onload="loadFromCookie()">
 
+	<div class="jumbotron text-center">
+		<h1>OAuth/OpenID Connect debugger</h1>
+		<p>Choose grant type, fill fields, press Authorize, inspect response.</p>
+	</div>
+
 	<div class="container">
-		<a href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/call-your-api-using-the-authorization-code-flow">Call
-			your api using the authorizaton code flow auth0</a>
-
-
 		<div class="form-group">
 			<label for="grantType">Grant type</label>
 			<select class="custom-select" id="grantType" aria-describedby="grantTypeHelp" placeholder="Enter grant type">
