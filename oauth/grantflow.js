@@ -25,6 +25,7 @@ function loadFromCookie(prefix) {
     setInput("token_endpoint", getCookie(prefix + "_token_endpoint"));
     setInput("audience", getCookie(prefix + "_audience"));
     setInput("scope", getCookie(prefix + "_scope"));
+    setInput("grantType", getCookie("grant"));
 }
 
 function storeInCookies(prefix) {
@@ -47,9 +48,11 @@ function storeInCookies(prefix) {
         + ";domain=.maxxq.org;path=/";
     document.cookie = prefix + "_scope=" + getInput("scope")
         + ";domain=.maxxq.org;path=/";
+    document.cookie = prefix + "_grant=" + getInput("grantType")
+        + ";domain=.maxxq.org;path=/";
     document.cookie = "cookie_prefix=" + prefix
         + ";domain=.maxxq.org;path=/";
-    
+
 }
 
 function getCookie(name) {
