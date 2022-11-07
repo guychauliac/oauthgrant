@@ -27,26 +27,6 @@ function loadFromCookie() {
     setInput("scope", getCookie("scope"));
 }
 
-function storeInCookie() {
-    document.cookie = "clientid=" + getInput("clientid")
-        + ";domain=.maxxq.org;path=/";
-    document.cookie = "secret=" + getInput("secret")
-        + ";domain=.maxxq.org;path=/";
-    document.cookie = "redirect_url="
-        + getInput("redirect_url")
-        + ";domain=.maxxq.org;path=/";
-    document.cookie = "token_endpoint="
-        + getInput("token_endpoint")
-        + ";domain=.maxxq.org;path=/";
-    document.cookie = "authorize_endpoint="
-        + getInput("authorize_endpoint")
-        + ";domain=.maxxq.org;path=/";
-    document.cookie = "audience=" + getInput("audience")
-        + ";domain=.maxxq.org;path=/";
-    document.cookie = "scope=" + getInput("scope")
-        + ";domain=.maxxq.org;path=/";
-}
-
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -94,7 +74,7 @@ function grantSelected() {
 }
 
 function authorize() {
-    storeInCookie();
+    storeInCookies();
 
     var grant = getInput("grantType");
     if (grant == "authorizationCode") {
@@ -126,4 +106,24 @@ function storeInCookie(key, value) {
     const d = new Date();
     d.setTime(d.getTime() + 5 * 60 * 1000);
     document.cookie = key + "=" + value + ";domain=.maxxq.org;path=/;expires=" + d.toUTCString();
+}
+
+function storeInCookies() {
+    document.cookie = "clientid=" + getInput("clientid")
+        + ";domain=.maxxq.org;path=/";
+    document.cookie = "secret=" + getInput("secret")
+        + ";domain=.maxxq.org;path=/";
+    document.cookie = "redirect_url="
+        + getInput("redirect_url")
+        + ";domain=.maxxq.org;path=/";
+    document.cookie = "token_endpoint="
+        + getInput("token_endpoint")
+        + ";domain=.maxxq.org;path=/";
+    document.cookie = "authorize_endpoint="
+        + getInput("authorize_endpoint")
+        + ";domain=.maxxq.org;path=/";
+    document.cookie = "audience=" + getInput("audience")
+        + ";domain=.maxxq.org;path=/";
+    document.cookie = "scope=" + getInput("scope")
+        + ";domain=.maxxq.org;path=/";
 }
