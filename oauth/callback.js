@@ -75,6 +75,7 @@ function validateMatchingScopes(jwtBody) {
     }
 
     var authorizedScopes = jwtBody.scope.split(" ");
+    var cookiePrefix = getCookie("cookie_prefix");
     var requestedScopes = getCookie(cookiePrefix + "_scope").split(" ");
 
     var notAuthorizedScopes = requestedScopes.filter(function (scope) {
