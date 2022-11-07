@@ -33,12 +33,13 @@ function getParameterByName(name, url = window.location.href) {
 }
 
 function getAccessTokenFromAuthorizationServer(code) {
+    var cookiePrefix = getCookie("cookie_prefix");
     fetch(getCookie("token_endpoint"), {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: 'grant_type=authorization_code&client_id=' + getCookie("clientid") + '&client_secret=' + getCookie("secret") + '&code=' + code + '&redirect_uri=' + getCookie("redirect_url")
+        body: 'grant_type=authorization_code&client_id=' + getCookie(cookiePrefix + "_clientid") + '&client_secret=' + getCookie(cookiePrefix + "_secret") + '&code=' + code + '&redirect_uri=' + getCookie(cookiePrefix + "_redirect_url")
     })
         .then(response => response.json())
         .then(response => processReceivedResponse(code, response))
@@ -74,7 +75,7 @@ function validateMatchingScopes(jwtBody) {
     }
 
     var authorizedScopes = jwtBody.scope.split(" ");
-    var requestedScopes = getCookie("scope").split(" ");
+    var requestedScopes = getCookie(cookiePrefix + "_scope").split(" ");
 
     var notAuthorizedScopes = requestedScopes.filter(function (scope) {
         return !authorizedScopes.includes(scope);

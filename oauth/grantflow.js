@@ -16,15 +16,40 @@ function setField(field, value) {
     document.getElementById(field).textContent = value;
 }
 
-function loadFromCookie() {
-    setInput("clientid", getCookie("clientid"));
-    setInput("secret", getCookie("secret"));
-    setInput("redirect_url", getCookie("redirect_url"));
+function loadFromCookie(prefix) {
+    setInput("clientid", getCookie(prefix + "_clientid"));
+    setInput("secret", getCookie(prefix + "_secret"));
+    setInput("redirect_url", getCookie(prefix + "_redirect_url"));
     setInput("authorize_endpoint",
-        getCookie("authorize_endpoint"));
-    setInput("token_endpoint", getCookie("token_endpoint"));
-    setInput("audience", getCookie("audience"));
-    setInput("scope", getCookie("scope"));
+        getCookie(gprefixant + "_authorize_endpoint"));
+    setInput("token_endpoint", getCookie(prefix + "_token_endpoint"));
+    setInput("audience", getCookie(prefix + "_audience"));
+    setInput("scope", getCookie(prefix + "_scope"));
+}
+
+function storeInCookies(prefix) {
+    var grant = getInput("grantType");
+
+    document.cookie = prefix + "_clientid=" + getInput("clientid")
+        + ";domain=.maxxq.org;path=/";
+    document.cookie = prefix + "_secret=" + getInput("secret")
+        + ";domain=.maxxq.org;path=/";
+    document.cookie = prefix + "_redirect_url="
+        + getInput("redirect_url")
+        + ";domain=.maxxq.org;path=/";
+    document.cookie = prefix + "_token_endpoint="
+        + getInput("token_endpoint")
+        + ";domain=.maxxq.org;path=/";
+    document.cookie = prefix + "_authorize_endpoint="
+        + getInput("authorize_endpoint")
+        + ";domain=.maxxq.org;path=/";
+    document.cookie = prefix + "_audience=" + getInput("audience")
+        + ";domain=.maxxq.org;path=/";
+    document.cookie = prefix + "_scope=" + getInput("scope")
+        + ";domain=.maxxq.org;path=/";
+    document.cookie = "cookie_prefix=" + prefix
+        + ";domain=.maxxq.org;path=/";
+    
 }
 
 function getCookie(name) {
@@ -47,11 +72,11 @@ function createRequest() {
         setField("authrequest", "Redirect to: " + authRequest);
         return authRequest;
     } else if (grant == "clientCredential") {
-        var authRequest = 'grant_type=client_credentials' 
-        + '&client_id=' + getInput("clientid") 
-        + '&client_secret=' + getInput("secret")  
-        + '&audience=' + getInput("audience") 
-        + '&scope=' + getInput("scope") 
+        var authRequest = 'grant_type=client_credentials'
+            + '&client_id=' + getInput("clientid")
+            + '&client_secret=' + getInput("secret")
+            + '&audience=' + getInput("audience")
+            + '&scope=' + getInput("scope")
         setField("authrequest", "POST to:  " + getInput("token_endpoint") + " body: " + authRequest);
         return authRequest;
     }
@@ -63,6 +88,7 @@ function setEnabled(field, isEnabled) {
 
 function grantSelected() {
     var grant = getInput("grantType");
+    loadFromCookie(grant);
 
     fieldsPerGrant.all.forEach(function (field) {
         setEnabled(field, false);
@@ -74,9 +100,9 @@ function grantSelected() {
 }
 
 function authorize() {
-    storeInCookies();
-
     var grant = getInput("grantType");
+    storeInCookies(grant);
+
     if (grant == "authorizationCode") {
         window.location.href = createRequest();
     } else if (grant = "clientCredential") {
@@ -106,24 +132,4 @@ function storeInCookie(key, value) {
     const d = new Date();
     d.setTime(d.getTime() + 5 * 60 * 1000);
     document.cookie = key + "=" + value + ";domain=.maxxq.org;path=/;expires=" + d.toUTCString();
-}
-
-function storeInCookies() {
-    document.cookie = "clientid=" + getInput("clientid")
-        + ";domain=.maxxq.org;path=/";
-    document.cookie = "secret=" + getInput("secret")
-        + ";domain=.maxxq.org;path=/";
-    document.cookie = "redirect_url="
-        + getInput("redirect_url")
-        + ";domain=.maxxq.org;path=/";
-    document.cookie = "token_endpoint="
-        + getInput("token_endpoint")
-        + ";domain=.maxxq.org;path=/";
-    document.cookie = "authorize_endpoint="
-        + getInput("authorize_endpoint")
-        + ";domain=.maxxq.org;path=/";
-    document.cookie = "audience=" + getInput("audience")
-        + ";domain=.maxxq.org;path=/";
-    document.cookie = "scope=" + getInput("scope")
-        + ";domain=.maxxq.org;path=/";
 }
