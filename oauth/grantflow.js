@@ -51,7 +51,7 @@ function storeInCookies(prefix) {
         + ";domain=.maxxq.org;path=/";
     document.cookie = prefix + "_scope=" + getInput("scope")
         + ";domain=.maxxq.org;path=/";
-    document.cookie = prefix + "_grant=" + getInput("grantType")
+    document.cookie = "grant=" + getInput("grantType")
         + ";domain=.maxxq.org;path=/";
     document.cookie = "cookie_prefix=" + prefix
         + ";domain=.maxxq.org;path=/";
