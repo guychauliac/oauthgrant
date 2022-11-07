@@ -16,6 +16,13 @@ function setField(field, value) {
     document.getElementById(field).textContent = value;
 }
 
+function onLoad() {
+    var grant = getCookie("grant");
+    if (grant) {
+        setInput("grantType", grant);
+    }
+}
+
 function loadFromCookie(prefix) {
     setInput("clientid", getCookie(prefix + "_clientid"));
     setInput("secret", getCookie(prefix + "_secret"));
@@ -25,10 +32,6 @@ function loadFromCookie(prefix) {
     setInput("token_endpoint", getCookie(prefix + "_token_endpoint"));
     setInput("audience", getCookie(prefix + "_audience"));
     setInput("scope", getCookie(prefix + "_scope"));
-    var grant = getCookie("grant");
-    if(grant){
-        setInput("grantType", grant);
-    }
 }
 
 function storeInCookies(prefix) {
