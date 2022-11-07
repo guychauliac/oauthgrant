@@ -25,7 +25,10 @@ function loadFromCookie(prefix) {
     setInput("token_endpoint", getCookie(prefix + "_token_endpoint"));
     setInput("audience", getCookie(prefix + "_audience"));
     setInput("scope", getCookie(prefix + "_scope"));
-    setInput("grantType", getCookie("grant"));
+    var grant = getCookie("grant");
+    if(grant){
+        setInput("grantType", grant);
+    }
 }
 
 function storeInCookies(prefix) {
