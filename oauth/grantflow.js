@@ -21,7 +21,7 @@ function loadFromCookie(prefix) {
     setInput("secret", getCookie(prefix + "_secret"));
     setInput("redirect_url", getCookie(prefix + "_redirect_url"));
     setInput("authorize_endpoint",
-        getCookie(gprefixant + "_authorize_endpoint"));
+        getCookie(prefix + "_authorize_endpoint"));
     setInput("token_endpoint", getCookie(prefix + "_token_endpoint"));
     setInput("audience", getCookie(prefix + "_audience"));
     setInput("scope", getCookie(prefix + "_scope"));
