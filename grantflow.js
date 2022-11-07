@@ -39,26 +39,26 @@ function storeInCookies(prefix) {
     var grant = getInput("grantType");
 
     document.cookie = prefix + "_clientid=" + getInput("clientid")
-        + ";domain=.maxxq.org;path=/";
+        + ";domain=.guychauliac.github.io;path=/";
     document.cookie = prefix + "_secret=" + getInput("secret")
-        + ";domain=.maxxq.org;path=/";
+        + ";domain=.guychauliac.github.io;path=/";
     document.cookie = prefix + "_redirect_url="
         + getInput("redirect_url")
-        + ";domain=.maxxq.org;path=/";
+        + ";domain=.guychauliac.github.io;path=/";
     document.cookie = prefix + "_token_endpoint="
         + getInput("token_endpoint")
-        + ";domain=.maxxq.org;path=/";
+        + ";domain=.guychauliac.github.io;path=/";
     document.cookie = prefix + "_authorize_endpoint="
         + getInput("authorize_endpoint")
-        + ";domain=.maxxq.org;path=/";
+        + ";domain=.guychauliac.github.io;path=/";
     document.cookie = prefix + "_audience=" + getInput("audience")
-        + ";domain=.maxxq.org;path=/";
+        + ";domain=.guychauliac.github.io;path=/";
     document.cookie = prefix + "_scope=" + getInput("scope")
-        + ";domain=.maxxq.org;path=/";
+        + ";domain=.guychauliac.github.io;path=/";
     document.cookie = "grant=" + getInput("grantType")
-        + ";domain=.maxxq.org;path=/";
+        + ";domain=.guychauliac.github.io;path=/";
     document.cookie = "cookie_prefix=" + prefix
-        + ";domain=.maxxq.org;path=/";
+        + ";domain=.guychauliac.github.io;path=/";
 
 }
 
@@ -141,5 +141,5 @@ function processReceivedResponse(response) {
 function storeInCookie(key, value) {
     const d = new Date();
     d.setTime(d.getTime() + 5 * 60 * 1000);
-    document.cookie = key + "=" + value + ";domain=.maxxq.org;path=/;expires=" + d.toUTCString();
+    document.cookie = key + "=" + value + ";domain=.guychauliac.github.io;path=/;expires=" + d.toUTCString();
 }

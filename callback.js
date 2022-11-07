@@ -93,7 +93,7 @@ function storeInCookie(key, value) {
     value = value.replace(/[\n\r]+/g, '');
     const d = new Date();
     d.setTime(d.getTime() + 5 * 60 * 1000);
-    document.cookie = key + "=" + value + ";domain=.maxxq.org;path=/;expires=" + d.toUTCString();
+    document.cookie = key + "=" + value + ";domain=.guychauliac.github.io;path=/;expires=" + d.toUTCString();
 }
 
 function setWarning(message, severity) {
