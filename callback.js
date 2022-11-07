@@ -34,7 +34,7 @@ function getParameterByName(name, url = window.location.href) {
 
 function getAccessTokenFromAuthorizationServer(code) {
     var cookiePrefix = getCookie("cookie_prefix");
-    fetch(getCookie(cookiePrefix + "token_endpoint"), {
+    fetch(getCookie(cookiePrefix + "_token_endpoint"), {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
