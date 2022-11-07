@@ -20,6 +20,7 @@ function onLoad() {
     var grant = getCookie("grant");
     if (grant) {
         setInput("grantType", grant);
+        grantSelected();
     }
 }
 
