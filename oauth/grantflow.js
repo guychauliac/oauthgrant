@@ -118,8 +118,8 @@ function callAuthorizationServer() {
 }
 
 function processReceivedResponse(response) {
-    storeInCookie("client_credential", JSON.stringify(response))
-    window.location.href = "/oauth/callback.html?code=client_credential";
+    storeInCookie("client_credential_response", JSON.stringify(response))
+    window.location.href = "/oauth/callback.html?code=client_credential_response";
 }
 
 function storeInCookie(key, value) {
