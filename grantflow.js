@@ -128,8 +128,7 @@ function callAuthorizationServer() {
     fetch(getInput("token_endpoint"), {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Cache-Control': 'no-store'
+            'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: createRequest(),
         cache: 'no-store'
