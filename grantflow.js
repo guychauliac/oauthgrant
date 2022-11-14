@@ -50,7 +50,7 @@ function storeInCookies(prefix) {
         + ";domain=.guychauliac.github.io;path=/;expires=" + d.toUTCString();
     document.cookie = prefix + "_token_endpoint="
         + getInput("token_endpoint")
-        + ";domain=.guychauliac.github.io;path=/";
+        + ";domain=.guychauliac.github.io;path=/;expires=" + d.toUTCString();
     document.cookie = prefix + "_authorize_endpoint="
         + getInput("authorize_endpoint")
         + ";domain=.guychauliac.github.io;path=/;expires=" + d.toUTCString();
