@@ -130,7 +130,8 @@ function callAuthorizationServer() {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: createRequest()
+        body: createRequest(),
+        cache: 'no-store'
     })
         .then(response => response.json())
         .then(response => processReceivedResponse(response))
