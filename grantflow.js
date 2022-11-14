@@ -125,13 +125,12 @@ function authorize() {
 }
 
 function callAuthorizationServer() {
-    fetch(getInput("token_endpoint") + "?state=" + makeid(21), {
+    fetch(getInput("token_endpoint"), {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: createRequest(),
-        cache: 'no-store'
+        body: createRequest()
     })
         .then(response => response.json())
         .then(response => processReceivedResponse(response))
@@ -148,12 +147,3 @@ function storeInCookie(key, value) {
     document.cookie = key + "=" + value + ";domain=.guychauliac.github.io;path=/;expires=" + d.toUTCString();
 }
 
-function makeid(length) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-}
