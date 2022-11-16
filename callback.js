@@ -80,7 +80,6 @@ function showIDTokenFields(accessTokenReponse) {
         setField("idtoken_decoded_header", beautify(jwtHeader));
         setField("idtoken_decoded_body", beautify(jwtBody));
         setField("idtoken_signature", jwtSignature);
-        validateMatchingScopes(jwtBody);
     } else {
         setField("idtoken_decoded_header", "no id token found in respose, add 'openid' + 'email | profile' to the requesting scopes if you want to obtain an ID token");
     }
