@@ -55,7 +55,7 @@ function processReceivedResponse(authorizationcode, accessTokenResponse) {
     setField("token", accessTokenAsString);
     storeInCookie(authorizationcode, accessTokenAsString);
     showAccessTokenFields(accessTokenResponse);
-    showIDTokenFields(showIDTokenFields);
+    showIDTokenFields(accessTokenResponse);
 }
 
 function showAccessTokenFields(accessTokenReponse) {
