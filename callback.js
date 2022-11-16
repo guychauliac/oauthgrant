@@ -55,9 +55,10 @@ function processReceivedResponse(authorizationcode, accessTokenResponse) {
     setField("token", accessTokenAsString);
     storeInCookie(authorizationcode, accessTokenAsString);
     showAccessTokenFields(accessTokenResponse);
+    showIDTokenFields(showIDTokenFields);
 }
 
-function showAccessTokenFields(accessTokenReponse){
+function showAccessTokenFields(accessTokenReponse) {
     var accessToken = accessTokenReponse.access_token;
     var tokenParts = accessToken.split('.');
     var jwtHeader = parseJwt(tokenParts[0]);
@@ -67,6 +68,20 @@ function showAccessTokenFields(accessTokenReponse){
     setField("decoded_body", beautify(jwtBody));
     setField("signature", jwtSignature);
     validateMatchingScopes(jwtBody);
+}
+
+function showIDTokenFields(accessTokenReponse) {
+    if (accessTokenReponse.id_token) {
+        var accessToken = accessTokenReponse.id_token;
+        var tokenParts = accessToken.split('.');
+        var jwtHeader = parseJwt(tokenParts[0]);
+        var jwtBody = parseJwt(tokenParts[1]);
+        var jwtSignature = tokenParts[2];
+        setField("idtoken_decoded_header", beautify(jwtHeader));
+        setField("idtoken_decoded_body", beautify(jwtBody));
+        setField("idtoken_signature", jwtSignature);
+        validateMatchingScopes(jwtBody);
+    }
 }
 
 function validateMatchingScopes(jwtBody) {
