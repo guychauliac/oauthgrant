@@ -1,7 +1,6 @@
 <html>
 <title>Oauth callback</title>
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
     .jumbotron {
         padding-top: 10px !important;
@@ -37,38 +36,45 @@
         </div>
 
         <div>
-            <label for="decoded_header">Access token header</label>
-            <pre id="decoded_header"></pre>
+            <h3>Access Token</h3>
+            <div>
+                <label for="decoded_header">Access token header</label>
+                <pre id="decoded_header"></pre>
+            </div>
+
+            <div>
+                <label for="decoded_body">Access token body</label>
+                <pre id="decoded_body"></pre>
+            </div>
+
+            <div>
+                <label for="signature">Access token signature</label>
+                <pre id="signature"></pre>
+            </div>
         </div>
 
-        <div>
-            <label for="decoded_body">Access token body</label>
-            <pre id="decoded_body"></pre>
-        </div>
 
         <div>
-            <label for="signature">Access token signature</label>
-            <pre id="signature"></pre>
-        </div>
+            <h3>ID Token</h3>
+            <div>
+                <label for="idtoken_decoded_header">ID Token header</label>
+                <pre id="idtoken_decoded_header"></pre>
+            </div>
 
-        <div>
-            <label for="idtoken_decoded_header">ID Token header</label>
-            <pre id="idtoken_decoded_header"></pre>
-        </div>
+            <div>
+                <label for="idtoken_decoded_body">ID Token body</label>
+                <pre id="idtoken_decoded_body"></pre>
+            </div>
 
-        <div>
-            <label for="idtoken_decoded_body">ID Token body</label>
-            <pre id="idtoken_decoded_body"></pre>
-        </div>
-
-        <div>
-            <label for="idtoken_signature">ID Token signature</label>
-            <pre id="idtoken_signature"></pre>
+            <div>
+                <label for="idtoken_signature">ID Token signature</label>
+                <pre id="idtoken_signature"></pre>
+            </div>
         </div>
 
         <div id="warning" class="w3-panel w3-pale-red w3-border" id="warning">Result of matching scopes</div>
 
-        <a  class="btn btn-info" href="/oauthgrant">Back</a>
+        <a class="btn btn-info" href="/oauthgrant">Back</a>
     </div>
 </body>
 
