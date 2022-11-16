@@ -82,7 +82,7 @@ function createRequest() {
             + getInput("redirect_url") + "&audience="
             + getInput("audience") + "&scope="
             + getInput("scope");
-        setField("authrequest", "Redirect to: " + authRequest);
+        setField("console", "Redirect to: " + authRequest);
         return authRequest;
     } else if (grant == "clientCredential") {
         var authRequest = 'grant_type=client_credentials'
@@ -90,7 +90,7 @@ function createRequest() {
             + '&client_secret=' + getInput("secret")
             + '&audience=' + getInput("audience")
             + '&scope=' + getInput("scope")
-        setField("authrequest", "POST to:  " + getInput("token_endpoint") + " body: " + authRequest);
+        setField("console", "POST to:  " + getInput("token_endpoint") + " body: " + authRequest);
         return authRequest;
     }
 }
@@ -134,6 +134,7 @@ function callAuthorizationServer() {
     })
         .then(response => response.json())
         .then(response => processReceivedResponse(response))
+        .catch(error => setField("console", "Error occured during invocation of token endpoint on the authorization server: " + error))
 }
 
 function processReceivedResponse(response) {
