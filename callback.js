@@ -59,27 +59,35 @@ function processReceivedResponse(authorizationcode, accessTokenResponse) {
 }
 
 function showAccessTokenFields(accessTokenReponse) {
-    var accessToken = accessTokenReponse.access_token;
-    var tokenParts = accessToken.split('.');
-    var jwtHeader = parseJwt(tokenParts[0]);
-    var jwtBody = parseJwt(tokenParts[1]);
-    var jwtSignature = tokenParts[2];
-    setField("decoded_header", beautify(jwtHeader));
-    setField("decoded_body", beautify(jwtBody));
-    setField("signature", jwtSignature);
-    validateMatchingScopes(jwtBody);
-}
-
-function showIDTokenFields(accessTokenReponse) {
-    if (accessTokenReponse.id_token) {
-        var accessToken = accessTokenReponse.id_token;
+    try {
+        var accessToken = accessTokenReponse.access_token;
         var tokenParts = accessToken.split('.');
         var jwtHeader = parseJwt(tokenParts[0]);
         var jwtBody = parseJwt(tokenParts[1]);
         var jwtSignature = tokenParts[2];
-        setField("idtoken_decoded_header", beautify(jwtHeader));
-        setField("idtoken_decoded_body", beautify(jwtBody));
-        setField("idtoken_signature", jwtSignature);
+        setField("decoded_header", beautify(jwtHeader));
+        setField("decoded_body", beautify(jwtBody));
+        setField("signature", jwtSignature);
+        validateMatchingScopes(jwtBody);
+    } catch (error) {
+        setWarning("Could not show access token fields", error);
+    }
+}
+
+function showIDTokenFields(accessTokenReponse) {
+    if (accessTokenReponse.id_token) {
+        try {
+            var accessToken = accessTokenReponse.id_token;
+            var tokenParts = accessToken.split('.');
+            var jwtHeader = parseJwt(tokenParts[0]);
+            var jwtBody = parseJwt(tokenParts[1]);
+            var jwtSignature = tokenParts[2];
+            setField("idtoken_decoded_header", beautify(jwtHeader));
+            setField("idtoken_decoded_body", beautify(jwtBody));
+            setField("idtoken_signature", jwtSignature);
+        } catch (error) {
+            setWarning("Could not show id token fields", error);
+        }
     } else {
         setField("idtoken_decoded_header", "no id token found in respose, add 'openid' + 'email | profile' to the requesting scopes if you want to obtain an ID token");
     }
