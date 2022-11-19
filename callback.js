@@ -70,7 +70,7 @@ function showAccessTokenFields(accessTokenReponse) {
         setField("signature", jwtSignature);
         validateMatchingScopes(jwtBody);
     } catch (error) {
-        setWarning("Could not show access token fields", error);
+        setWarning("Could not show access token fields: '" + error + "'", "warning");
     }
 }
 
@@ -86,7 +86,7 @@ function showIDTokenFields(accessTokenReponse) {
             setField("idtoken_decoded_body", beautify(jwtBody));
             setField("idtoken_signature", jwtSignature);
         } catch (error) {
-            setWarning("Could not show id token fields", error);
+            setWarning("Could not show id token fields: '" + error + "'", "warning");
         }
     } else {
         setField("idtoken_decoded_header", "no id token found in respose, add 'openid' + 'email | profile' to the requesting scopes if you want to obtain an ID token");
