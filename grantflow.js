@@ -117,11 +117,10 @@ function authorize() {
     storeInCookies(grant);
 
     if (grant == "authorizationCode") {
-        window.location.href = createRequest();
+        redirect(createRequest());
     } else if (grant = "clientCredential") {
         callAuthorizationServer();
     }
-
 }
 
 function callAuthorizationServer() {
@@ -135,6 +134,10 @@ function callAuthorizationServer() {
         .then(response => response.json())
         .then(response => processReceivedResponse(response))
         .catch(error => setField("console", "Error occured during invocation of token endpoint on the authorization server: " + error))
+}
+
+function redirect(toURL){
+    window.location.href = toURL;
 }
 
 function processReceivedResponse(response) {
