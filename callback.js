@@ -46,6 +46,7 @@ function getAccessTokenFromAuthorizationServer(code) {
 }
 
 function getBody() {
+    var cookiePrefix = getCookie("cookie_prefix");
     var grant = getCookie("grant");
     if (grant == "authorizationCode") {
         return 'grant_type=authorization_code&client_id=' + getCookie(cookiePrefix + "_clientid") + '&client_secret=' + getCookie(cookiePrefix + "_secret") + '&code=' + code + '&redirect_uri=' + getCookie(cookiePrefix + "_redirect_url");
