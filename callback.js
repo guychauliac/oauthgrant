@@ -39,19 +39,19 @@ function getAccessTokenFromAuthorizationServer(code) {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: getBody()
+        body: getBody(code)
     })
         .then(response => response.json())
         .then(response => processReceivedResponse(code, response))
 }
 
-function getBody() {
+function getBody(code) {
     var cookiePrefix = getCookie("cookie_prefix");
     var grant = getCookie("grant");
     if (grant == "authorizationCode") {
         return 'grant_type=authorization_code&client_id=' + getCookie(cookiePrefix + "_clientid") + '&client_secret=' + getCookie(cookiePrefix + "_secret") + '&code=' + code + '&redirect_uri=' + getCookie(cookiePrefix + "_redirect_url");
     } else if (grant == "authorizationCodePKCE") {
-        return 'grant_type=authorization_code&client_id=' + getCookie(cookiePrefix + "_clientid") + '&code_verifier=' + getCookie(cookiePrefix + "_codeVerifier") + '&code=' + code + '&redirect_uri=' + getCookie(cookiePrefix + "_redirect_url");
+        return 'grant_type=authorization_code&client_id=' + getCookie(cookiePrefix + "_clientid") + '&code_verifier=' + getCookie("codeVerifier") + '&code=' + code + '&redirect_uri=' + getCookie(cookiePrefix + "_redirect_url");
     }
 }
 
