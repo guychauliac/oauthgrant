@@ -117,9 +117,9 @@ function validateMatchingScopes(jwtBody) {
     });
 
     if (notAuthorizedScopes.length > 0) {
-        setWarning("Some scopes where not authorized: " + notAuthorizedScopes, "warning");
+        setWarning("Some scopes were not authorized: " + notAuthorizedScopes, "warning");
     } else {
-        setWarning("All scopes where authorized", "info");
+        setWarning("All scopes were authorized", "info");
     }
 }
 
