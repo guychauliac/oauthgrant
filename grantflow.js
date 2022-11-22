@@ -1,6 +1,7 @@
 const fieldsPerGrant = {
-    "all": ["authorize_endpoint", "token_endpoint", "clientid", "secret", "audience", "scope", "redirect_url"],
+    "all": ["authorize_endpoint", "token_endpoint", "clientid", "secret", "audience", "scope", "redirect_url", "codeVerifier", "codeChallenge"],
     "authorizationCode": ["authorize_endpoint", "token_endpoint", "clientid", "secret", "audience", "scope", "redirect_url"],
+    "authorizationCodePKCE": ["authorize_endpoint", "token_endpoint", "clientid", "codeVerifier", "codeChallenge", "audience", "scope", "redirect_url"],
     "clientCredential": ["token_endpoint", "clientid", "secret", "audience", "scope"],
 };
 
@@ -37,31 +38,36 @@ function loadFromCookie(prefix) {
 
 function storeInCookies(prefix) {
     var grant = getInput("grantType");
-    
-    const d = new Date();
-    d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000);
-    
+
+    const oneYear = new Date();
+    oneYear.setTime(oneYear.getTime() + 365 * 24 * 60 * 60 * 1000);
+
+    const oneMinute = new Date();
+    oneYear.setTime(oneYear.getTime() + 60 * 1000);
+
     document.cookie = prefix + "_clientid=" + getInput("clientid")
-        + ";domain=.guychauliac.github.io;path=/;expires=" + d.toUTCString();
+        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
     document.cookie = prefix + "_secret=" + getInput("secret")
-        + ";domain=.guychauliac.github.io;path=/;expires=" + d.toUTCString();
+        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
     document.cookie = prefix + "_redirect_url="
         + getInput("redirect_url")
-        + ";domain=.guychauliac.github.io;path=/;expires=" + d.toUTCString();
+        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
     document.cookie = prefix + "_token_endpoint="
         + getInput("token_endpoint")
-        + ";domain=.guychauliac.github.io;path=/;expires=" + d.toUTCString();
+        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
     document.cookie = prefix + "_authorize_endpoint="
         + getInput("authorize_endpoint")
-        + ";domain=.guychauliac.github.io;path=/;expires=" + d.toUTCString();
+        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
     document.cookie = prefix + "_audience=" + getInput("audience")
-        + ";domain=.guychauliac.github.io;path=/;expires=" + d.toUTCString();
+        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
     document.cookie = prefix + "_scope=" + getInput("scope")
-        + ";domain=.guychauliac.github.io;path=/;expires=" + d.toUTCString();
+        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
     document.cookie = "grant=" + getInput("grantType")
-        + ";domain=.guychauliac.github.io;path=/;expires=" + d.toUTCString();
+        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
+    document.cookie = "grant=" + getInput("codeVerifier")
+        + ";domain=.guychauliac.github.io;path=/;expires=" + oneMinute.toUTCString();
     document.cookie = "cookie_prefix=" + prefix
-        + ";domain=.guychauliac.github.io;path=/;expires=" + d.toUTCString();
+        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
 
 }
 
@@ -82,6 +88,16 @@ function createRequest() {
             + getInput("redirect_url") + "&audience="
             + getInput("audience") + "&scope="
             + getInput("scope");
+        setField("console", "Redirect to: " + authRequest);
+        return authRequest;
+    } else if (grant == "authorizationCodePKCE") {
+        var authRequest = getInput("authorize_endpoint")
+            + "?response_type=code" + "&client_id="
+            + getInput("clientid") + "&redirect_uri="
+            + getInput("redirect_url") + "&audience="
+            + getInput("audience") + "&scope="
+            + getInput("scope") + "&code_challenge="
+            + getInput("codeChallenge") + "&code_challenge_method=S256"
         setField("console", "Redirect to: " + authRequest);
         return authRequest;
     } else if (grant == "clientCredential") {
@@ -110,13 +126,20 @@ function grantSelected() {
         setEnabled(field, true);
     });
 
+    generateCodeChallengeAndVerifier();
+}
+
+function generateCodeChallengeAndVerifier() {
+    var verifier = generateCodeVerifier();
+    setInput("codeVerifier", verifier);
+    setInput("codeChallenge", generateCodeChallenge(verifier));
 }
 
 function authorize() {
     var grant = getInput("grantType");
     storeInCookies(grant);
 
-    if (grant == "authorizationCode") {
+    if (grant == "authorizationCode" || grant =="authorizationCodePKCE") {
         redirect(createRequest());
     } else if (grant = "clientCredential") {
         callAuthorizationServer();
@@ -136,7 +159,7 @@ function callAuthorizationServer() {
         .catch(error => setField("console", "Error occured during invocation of token endpoint on the authorization server: " + error))
 }
 
-function redirect(toURL){
+function redirect(toURL) {
     window.location.href = toURL;
 }
 
@@ -146,8 +169,8 @@ function processReceivedResponse(response) {
 }
 
 function storeInCookie(key, value) {
-    const d = new Date();
-    d.setTime(d.getTime() + 5 * 60 * 1000);
-    document.cookie = key + "=" + value + ";domain=.guychauliac.github.io;path=/;expires=" + d.toUTCString();
+    const oneYear = new Date();
+    oneYear.setTime(oneYear.getTime() + 5 * 60 * 1000);
+    document.cookie = key + "=" + value + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
 }
 

@@ -1,0 +1,2 @@
+https://www.oauth.com/oauth2-servers/pkce/authorization-request/
+https://auth0.com/docs/get-started/authentication-and-authorization-flow/call-your-api-using-the-authorization-code-flow-with-pkce#create-code-verifier

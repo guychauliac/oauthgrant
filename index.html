@@ -19,6 +19,8 @@
 	<meta name="author" content="Guy Chauliac">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="grantflow.js"></script>
+	<script src="pkce.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 
@@ -34,6 +36,7 @@
 			<label for="grantType">Grant type</label>
 			<select onchange="grantSelected()" class="custom-select" id="grantType" aria-describedby="grantTypeHelp" placeholder="Enter grant type">
 				<option value="authorizationCode">Authorization code flow</option>
+				<option value="authorizationCodePKCE">Authorization code flow with PKCE</option>
 				<option value="clientCredential">Client credential flow</option>
 			</select>
 			<small id="grantTypeHelp" class="form-text text-muted"></small>
@@ -61,6 +64,18 @@
 			<label for="secret">Secret</label>
 			<input type="text" class="form-control" id="secret" aria-describedby="secretHelp" placeholder="Enter secret">
 			<small id="secretHelp" class="form-text text-muted">Client secret</small>
+		</div>
+
+		<div class="form-group">
+			<label for="codeVerifier">Code verifier</label>
+			<input disabled type="text" class="form-control" id="codeVerifier" aria-describedby="codeVerifierHelp" placeholder="Generated code verifier">
+			<small id="codeVerifierHelp" class="form-text text-muted">Random string of 128 characters, which will be send to the authorization server during retrievel of the access token</small>
+		</div>
+
+		<div class="form-group">
+			<label for="codeChallenge">Code challenge</label>
+			<input disabled type="text" class="form-control" id="codeChallenge" aria-describedby="codeChallengeHelp" placeholder="Generated code challenge">
+			<small id="codeChallengeHelp" class="form-text text-muted">Base 64 url encoded version of Sha 256 of the code verifier which will be send to the authorization server during the authorization request</small>
 		</div>
 
 		<div class="form-group">
@@ -94,7 +109,7 @@
 
 	
 
-	<div class="panel-footer text-right"><a href="https://github.com/guychauliac/oauthgrant">v1.12.6</a></div>
+	<div class="panel-footer text-right"><a href="https://github.com/guychauliac/oauthgrant">v1.13.0</a></div>
 </body>
 
 </html>

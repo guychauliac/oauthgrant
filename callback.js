@@ -45,6 +45,15 @@ function getAccessTokenFromAuthorizationServer(code) {
         .then(response => processReceivedResponse(code, response))
 }
 
+function getBody() {
+    var grant = getCookie("grant");
+    if (grant == "authorizationCode") {
+        return 'grant_type=authorization_code&client_id=' + getCookie(cookiePrefix + "_clientid") + '&client_secret=' + getCookie(cookiePrefix + "_secret") + '&code=' + code + '&redirect_uri=' + getCookie(cookiePrefix + "_redirect_url");
+    } else if (grant == "authorizationCodePKCE") {
+        return 'grant_type=authorization_code&client_id=' + getCookie(cookiePrefix + "_clientid") + '&code_verifier=' + getCookie(cookiePrefix + "_codeVerifier") + '&code=' + code + '&redirect_uri=' + getCookie(cookiePrefix + "_redirect_url");
+    }
+}
+
 function setField(field, value) {
     document.getElementById(field).textContent = value;
 }
