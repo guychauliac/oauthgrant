@@ -64,7 +64,7 @@ function storeInCookies(prefix) {
         + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
     document.cookie = "grant=" + getInput("grantType")
         + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
-    document.cookie = "grant=" + getInput("codeVerifier")
+    document.cookie = "codeVerifier=" + getInput("codeVerifier")
         + ";domain=.guychauliac.github.io;path=/;expires=" + oneMinute.toUTCString();
     document.cookie = "cookie_prefix=" + prefix
         + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
