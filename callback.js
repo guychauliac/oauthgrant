@@ -39,7 +39,7 @@ function getAccessTokenFromAuthorizationServer(code) {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: 'grant_type=authorization_code&client_id=' + getCookie(cookiePrefix + "_clientid") + '&client_secret=' + getCookie(cookiePrefix + "_secret") + '&code=' + code + '&redirect_uri=' + getCookie(cookiePrefix + "_redirect_url")
+        body: getBody()
     })
         .then(response => response.json())
         .then(response => processReceivedResponse(code, response))
