@@ -40,37 +40,37 @@
 				<option value="authorizationCodePKCE">Authorization code flow with PKCE</option>
 				<option value="clientCredential">Client credential flow</option>
 			</select>
-			<small id="grantTypeHelp" class="form-text text-muted"></small>
+			<small id="grantTypeHelp" class="form-text text-muted">Choose a grant type</small>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group" id="authorize_endpoint_fg">
 			<label class="font-weight-bold" for="authorize_endpoint">Authorization endpoint</label>
 			<input type="text" class="form-control" id="authorize_endpoint" aria-describedby="authorizationEndpointHelp" placeholder="Enter authorization endpoint">
 			<small id="authorizationEndpointHelp" class="form-text text-muted">Authorization endpoint url</small>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group" id="token_endpoint_fg">
 			<label class="font-weight-bold" for="token_endpoint">Token endpoint</label>
 			<input type="text" class="form-control" id="token_endpoint" aria-describedby="tokenEndpointHelp" placeholder="Enter token endpoint">
 			<small id="tokenEndpointHelp" class="form-text text-muted">Token endpoint url</small>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group" id="clientid_fg">
 			<label class="font-weight-bold" for="clientid">Client id</label>
 			<input type="text" class="form-control" id="clientid" aria-describedby="clientIdHelp" placeholder="Enter client id">
 			<small id="clientIdHelp" class="form-text text-muted">Client id</small>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group" id="secret_fg">
 			<label class="font-weight-bold" for="secret">Secret</label>
 			<input type="text" class="form-control" id="secret" aria-describedby="secretHelp" placeholder="Enter secret">
 			<small id="secretHelp" class="form-text text-muted">Client secret</small>
 		</div>
 
-		<div class="form-group">
-			<label class="font-weight-bold" for="codeVerifier">Code verifier</label>
+		<div class="form-group" id="code_verifier_fg">
+			<label class="font-weight-bold" for="code_verifier">Code verifier</label>
 			<div class="input-group mb-3">
-				<input disabled type="text" class="form-control" id="codeVerifier" aria-describedby="codeVerifierHelp" placeholder="Generated code verifier">
+				<input type="text" class="form-control" id="code_verifier" aria-describedby="codeVerifierHelp" placeholder="Generated code verifier">
 				<div class="input-group-append">
 					<button class="btn btn-outline-secondary" onClick="generateCodeChallengeAndVerifier()">Regenerate</button>
 				</div>
@@ -78,32 +78,32 @@
 			<small id="codeVerifierHelp" class="form-text text-muted">Random string of 128 characters, which will be send to the authorization server during retrievel of the access token</small>
 		</div>
 		
-		<div class="form-group">
-			<label class="font-weight-bold" for="codeChallenge">Code challenge</label>
-			<input disabled type="text" class="form-control" id="codeChallenge" aria-describedby="codeChallengeHelp" placeholder="Generated code challenge">
+		<div class="form-group" id="code_challenge_fg">
+			<label class="font-weight-bold" for="code_challenge">Code challenge</label>
+			<input type="text" class="form-control" id="code_challenge" aria-describedby="codeChallengeHelp" placeholder="Generated code challenge">
 			<small id="codeChallengeHelp" class="form-text text-muted">Base 64 url encoded version of Sha 256 of the code verifier which will be send to the authorization server during the authorization request</small>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group" id="redirect_url_fg">
 			<label class="font-weight-bold" for="redirect_url">Redirect url</label>
 			<input type="text" class="form-control" id="redirect_url" aria-describedby="redirectURLHelp" placeholder="Enter redirect url">
 			<small id="redirectURLHelp" class="form-text text-muted">Redirect url that will be invoked after authorization</small>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group" id="audience_fg">
 			<label class="font-weight-bold" for="audience">Audience</label>
 			<input type="text" class="form-control" id="audience" aria-describedby="audienceHelp" placeholder="Enter audience">
 			<small id="audienceHelp" class="form-text text-muted">Audience to which access is requested</small>
 		</div>
 
-		<div class="form-group">
-			<label for="scope">Scope</label>
+		<div class="form-group" id="scope_fg">
+			<label class="font-weight-bold" for="scope">Scope</label>
 			<input type="text" class="form-control" id="scope" aria-describedby="scopeHelp" placeholder="Enter scope">
 			<small id="scopeHelp" class="form-text text-muted">Scope to which access is requested</small>
 		</div>
 
 		<div>
-			<label for="console">Console</label>
+			<label class="font-weight-bold" for="console">Console</label>
 			<textarea rows="6" disabled class="form-control" id="console"></textarea>
 		</div>
 
@@ -115,7 +115,7 @@
 
 	
 
-	<div class="panel-footer text-right"><a href="https://github.com/guychauliac/oauthgrant">v1.14.0</a></div>
+	<div class="panel-footer text-right"><a href="https://github.com/guychauliac/oauthgrant">v1.14.1</a></div>
 </body>
 
 </html>

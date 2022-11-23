@@ -1,8 +1,8 @@
 const fieldsPerGrant = {
-    "all": ["authorize_endpoint", "token_endpoint", "clientid", "secret", "audience", "scope", "redirect_url", "codeVerifier", "codeChallenge"],
-    "authorizationCode": ["authorize_endpoint", "token_endpoint", "clientid", "secret", "audience", "scope", "redirect_url"],
-    "authorizationCodePKCE": ["authorize_endpoint", "token_endpoint", "clientid", "codeVerifier", "codeChallenge", "audience", "scope", "redirect_url"],
-    "clientCredential": ["token_endpoint", "clientid", "secret", "audience", "scope"],
+    "all": ["authorize_endpoint_fg", "token_endpoint_fg", "clientid_fg", "secret_fg", "audience_fg", "scope_fg", "redirect_url_fg", "code_verifier_fg", "code_challenge_fg"],
+    "authorizationCode": ["authorize_endpoint_fg", "token_endpoint_fg", "clientid_fg", "secret_fg", "audience_fg", "scope_fg", "redirect_url_fg"],
+    "authorizationCodePKCE": ["authorize_endpoint_fg", "token_endpoint_fg", "clientid_fg", "code_verifier_fg", "code_challenge_fg", "audience_fg", "scope_fg", "redirect_url_fg"],
+    "clientCredential": ["token_endpoint_fg", "clientid_fg", "secret_fg", "audience_fg", "scope_fg"],
 };
 
 function getInput(field) {
@@ -64,7 +64,7 @@ function storeInCookies(prefix) {
         + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
     document.cookie = "grant=" + getInput("grantType")
         + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
-    document.cookie = "code_verifier=" + getInput("codeVerifier")
+    document.cookie = "code_verifier=" + getInput("code_verifier")
         + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
     document.cookie = "cookie_prefix=" + prefix
         + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
@@ -97,7 +97,7 @@ function createRequest() {
             + getInput("redirect_url") + "&audience="
             + getInput("audience") + "&scope="
             + getInput("scope") + "&code_challenge="
-            + getInput("codeChallenge") + "&code_challenge_method=S256"
+            + getInput("code_challenge") + "&code_challenge_method=S256"
         setField("console", "Redirect to: " + authRequest);
         return authRequest;
     } else if (grant == "clientCredential") {
@@ -112,7 +112,11 @@ function createRequest() {
 }
 
 function setEnabled(field, isEnabled) {
-    document.getElementById(field).disabled = !isEnabled;
+    //document.getElementById(field).disabled = !isEnabled;
+    var element = document.getElementById(field)
+    if(element){
+    	element.style.display = isEnabled ? "block" : "none";
+	}
 }
 
 function grantSelected() {
@@ -131,8 +135,8 @@ function grantSelected() {
 
 function generateCodeChallengeAndVerifier() {
     var verifier = generateCodeVerifier();
-    setInput("codeVerifier", verifier);
-    setInput("codeChallenge", generateCodeChallenge(verifier));
+    setInput("code_verifier", verifier);
+    setInput("code_challenge", generateCodeChallenge(verifier));
 }
 
 function authorize() {
