@@ -1,7 +1,7 @@
 const fieldsPerGrant = {
     "all": ["authorize_endpoint_fg", "token_endpoint_fg", "clientid_fg", "secret_fg", "audience_fg", "scope_fg", "redirect_url_fg", "code_verifier_fg", "code_challenge_fg"],
     "authorizationCode": ["authorize_endpoint_fg", "token_endpoint_fg", "clientid_fg", "secret_fg", "audience_fg", "scope_fg", "redirect_url_fg"],
-    "authorizationCodePKCE": ["authorize_endpoint_fg", "token_endpoint_fg", "clientid_fg", "code_verifier_fg", "code_challenge_fg", "audience_fg", "scope_fg", "redirect_url_fg"],
+    "authorizationCodePKCE": ["authorize_endpoint_fg", "token_endpoint_fg", "clientid_fg", "secret_fg", "code_verifier_fg", "code_challenge_fg", "audience_fg", "scope_fg", "redirect_url_fg"],
     "clientCredential": ["token_endpoint_fg", "clientid_fg", "secret_fg", "audience_fg", "scope_fg"],
 };
 

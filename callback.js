@@ -51,7 +51,12 @@ function getBody(code) {
     if (grant == "authorizationCode") {
         return 'grant_type=authorization_code&client_id=' + getCookie(cookiePrefix + "_clientid") + '&client_secret=' + getCookie(cookiePrefix + "_secret") + '&code=' + code + '&redirect_uri=' + getCookie(cookiePrefix + "_redirect_url");
     } else if (grant == "authorizationCodePKCE") {
-        return 'grant_type=authorization_code&client_id=' + getCookie(cookiePrefix + "_clientid") + '&code_verifier=' + getCookie("code_verifier") + '&code=' + code + '&redirect_uri=' + getCookie(cookiePrefix + "_redirect_url");
+        var body =  'grant_type=authorization_code&client_id=' + getCookie(cookiePrefix + "_clientid") + '&code_verifier=' + getCookie("code_verifier") + '&code=' + code + '&redirect_uri=' + getCookie(cookiePrefix + "_redirect_url");
+		var secret = getCookie(cookiePrefix + "_secret");
+		if(secret){
+			body += '&client_secret=' + secret;
+		}
+		return body;
     }
 }
 
