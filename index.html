@@ -64,7 +64,7 @@
 		<div class="form-group" id="secret_fg">
 			<label class="font-weight-bold" for="secret">Secret</label>
 			<input type="text" class="form-control" id="secret" aria-describedby="secretHelp" placeholder="Enter secret">
-			<small id="secretHelp" class="form-text text-muted">Enter secret for confidential clients</small>
+			<small id="secretHelp" class="form-text text-muted">Enter secret for confidential clients, it can be left empty for authorization code flow with PKCE with a public client</small>
 		</div>
 
 		<div class="form-group" id="code_verifier_fg">
@@ -112,8 +112,6 @@
 			<button class="btn btn-primary" onClick="createRequest()">Show authorization request</button>
 		</div>
 	</div>
-
-	
 
 	<div class="panel-footer text-right"><a href="https://github.com/guychauliac/oauthgrant">v1.15.0</a></div>
 </body>
