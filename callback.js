@@ -104,7 +104,7 @@ function showIDTokenFields(accessTokenReponse) {
             setWarning("Could not show id token fields: '" + error + "'", "warning");
         }
     } else {
-        setField("idtoken_decoded_header", "no id token found in respose, add 'openid' + 'email | profile' to the requesting scopes if you want to obtain an ID token");
+        setField("idtoken_decoded_header", "no id token found in response, add 'openid' + 'email | profile' to the requesting scopes if you want to obtain an ID token");
     }
 }
 
