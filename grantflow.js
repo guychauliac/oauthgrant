@@ -46,28 +46,28 @@ function storeInCookies(prefix) {
     oneYear.setTime(oneYear.getTime() + 60 * 1000);
 
     document.cookie = prefix + "_clientid=" + getInput("clientid")
-        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
+        + ";domain=.oauth.maxxq.org;path=/;expires=" + oneYear.toUTCString();
     document.cookie = prefix + "_secret=" + getInput("secret")
-        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
+        + ";domain=.oauth.maxxq.org;path=/;expires=" + oneYear.toUTCString();
     document.cookie = prefix + "_redirect_url="
         + getInput("redirect_url")
-        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
+        + ";domain=.oauth.maxxq.org;path=/;expires=" + oneYear.toUTCString();
     document.cookie = prefix + "_token_endpoint="
         + getInput("token_endpoint")
-        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
+        + ";domain=.oauth.maxxq.org;path=/;expires=" + oneYear.toUTCString();
     document.cookie = prefix + "_authorize_endpoint="
         + getInput("authorize_endpoint")
-        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
+        + ";domain=.oauth.maxxq.org;path=/;expires=" + oneYear.toUTCString();
     document.cookie = prefix + "_audience=" + getInput("audience")
-        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
+        + ";domain=.oauth.maxxq.org;path=/;expires=" + oneYear.toUTCString();
     document.cookie = prefix + "_scope=" + getInput("scope")
-        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
+        + ";domain=.oauth.maxxq.org;path=/;expires=" + oneYear.toUTCString();
     document.cookie = "grant=" + getInput("grantType")
-        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
+        + ";domain=.oauth.maxxq.org;path=/;expires=" + oneYear.toUTCString();
     document.cookie = "code_verifier=" + getInput("code_verifier")
-        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
+        + ";domain=.oauth.maxxq.org;path=/;expires=" + oneYear.toUTCString();
     document.cookie = "cookie_prefix=" + prefix
-        + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
+        + ";domain=.oauth.maxxq.org;path=/;expires=" + oneYear.toUTCString();
 
 }
 
@@ -175,6 +175,6 @@ function processReceivedResponse(response) {
 function storeInCookie(key, value) {
     const oneYear = new Date();
     oneYear.setTime(oneYear.getTime() + 5 * 60 * 1000);
-    document.cookie = key + "=" + value + ";domain=.guychauliac.github.io;path=/;expires=" + oneYear.toUTCString();
+    document.cookie = key + "=" + value + ";domain=.oauth.maxxq.org;path=/;expires=" + oneYear.toUTCString();
 }
 
