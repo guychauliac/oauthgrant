@@ -1,5 +1,11 @@
 let loadedFileData = null;
 
+ document.getElementById('fileInput').addEventListener('change', function(e) {
+  if (e.target.files[0]) {
+    document.body.append(loadFile());
+  }
+});
+
 function loadFile() {
   let file = fileInput.files[0];
   let reader = new FileReader();

@@ -2,113 +2,155 @@
 <html>
 <title>Authorization code flow</title>
 <style>
-	.jumbotron {
-		padding-top: 10px !important;
-		padding-bottom: 10px !important;
-	}
+.jumbotron {
+	padding-top: 10px !important;
+	padding-bottom: 10px !important;
+}
 
-	pre {
-		word-wrap: break-word;
-	}
-	
+pre {
+	word-wrap: break-word;
+}
 </style>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="description" content="OAuth tester">
-	<meta name="keywords" content="OAuth debug jwt">
-	<meta name="author" content="Guy Chauliac">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="grantflow.js"></script>
-	<script src="pkce.js"></script>
-	<script src="fileio.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<meta charset="UTF-8">
+<meta name="description" content="OAuth tester">
+<meta name="keywords" content="OAuth debug jwt">
+<meta name="author" content="Guy Chauliac">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="grantflow.js"></script>
+<script src="pkce.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
 </head>
 
 <body onload="onLoad()">
 
 	<div class="jumbotron text-center">
 		<h1>OAuth/OpenID Connect tester</h1>
-		<p>Choose grant type, fill fields, press Authorize, inspect response.</p>
+		<p>Choose grant type, fill fields, press Authorize, inspect
+			response.</p>
 	</div>
-	
+
 	<div class="container">
 		<div class="form-group">
-			<input type="file" id="fileInput">
-			<button onclick="loadFile()">Load File</button>
-			<button onclick="saveFile()">Save File</button>
+			<div class="row">
+				<div class="form-group col-sm">
+					<input class="form-control form-control-sm" type="file"
+						id="fileInput" aria-describedby="fileHelp">
+						<small id="fileHelp" class="form-text text-muted">Save and load OAuth configuration.</small>
+				</div>
+				<div class="form-group col-sm">
+					<button class="btn btn-secondary" onclick="saveFile()">Save
+						File</button>
+				</div>
+			</div>
 		</div>
 	</div>
 	
+	<script src="fileio.js"></script>
+
 	<div class="container">
 		<div class="form-group">
-			<label class="font-weight-bold" for="grantType">Grant type</label>
-			<select onchange="grantSelected()" class="custom-select" id="grantType" aria-describedby="grantTypeHelp" placeholder="Enter grant type">
+			<label class="font-weight-bold" for="grantType">Grant type</label> <select
+				onchange="grantSelected()" class="custom-select" id="grantType"
+				aria-describedby="grantTypeHelp" placeholder="Enter grant type">
 				<option value="authorizationCode">Authorization code flow</option>
-				<option value="authorizationCodePKCE">Authorization code flow with PKCE</option>
+				<option value="authorizationCodePKCE">Authorization code
+					flow with PKCE</option>
 				<option value="clientCredential">Client credential flow</option>
-			</select>
-			<small id="grantTypeHelp" class="form-text text-muted">Choose a grant type</small>
+			</select> <small id="grantTypeHelp" class="form-text text-muted">Choose
+				a grant type</small>
 		</div>
-		
+
 		<div class="form-group" id="authorize_endpoint_fg">
-			<label class="font-weight-bold" for="authorize_endpoint">Authorization endpoint</label>
-			<input type="text" class="form-control" id="authorize_endpoint" aria-describedby="authorizationEndpointHelp" placeholder="Enter authorization endpoint">
-			<small id="authorizationEndpointHelp" class="form-text text-muted">Authorization endpoint url</small>
+			<label class="font-weight-bold" for="authorize_endpoint">Authorization
+				endpoint</label> <input type="text" class="form-control"
+				id="authorize_endpoint" aria-describedby="authorizationEndpointHelp"
+				placeholder="Enter authorization endpoint"> <small
+				id="authorizationEndpointHelp" class="form-text text-muted">Authorization
+				endpoint url</small>
 		</div>
 
 		<div class="form-group" id="token_endpoint_fg">
-			<label class="font-weight-bold" for="token_endpoint">Token endpoint</label>
-			<input type="text" class="form-control" id="token_endpoint" aria-describedby="tokenEndpointHelp" placeholder="Enter token endpoint">
-			<small id="tokenEndpointHelp" class="form-text text-muted">Token endpoint url</small>
+			<label class="font-weight-bold" for="token_endpoint">Token
+				endpoint</label> <input type="text" class="form-control" id="token_endpoint"
+				aria-describedby="tokenEndpointHelp"
+				placeholder="Enter token endpoint"> <small
+				id="tokenEndpointHelp" class="form-text text-muted">Token
+				endpoint url</small>
 		</div>
 
 		<div class="form-group" id="clientid_fg">
-			<label class="font-weight-bold" for="clientid">Client id</label>
-			<input type="text" class="form-control" id="clientid" aria-describedby="clientIdHelp" placeholder="Enter client id">
-			<small id="clientIdHelp" class="form-text text-muted">Client id</small>
+			<label class="font-weight-bold" for="clientid">Client id</label> <input
+				type="text" class="form-control" id="clientid"
+				aria-describedby="clientIdHelp" placeholder="Enter client id">
+			<small id="clientIdHelp" class="form-text text-muted">Client
+				id</small>
 		</div>
 
 		<div class="form-group" id="secret_fg">
-			<label class="font-weight-bold" for="secret">Secret</label>
-			<input type="text" class="form-control" id="secret" aria-describedby="secretHelp" placeholder="Enter secret">
-			<small id="secretHelp" class="form-text text-muted">Enter secret for confidential clients, it can be left empty for authorization code flow with PKCE with a public client</small>
+			<label class="font-weight-bold" for="secret">Secret</label> <input
+				type="text" class="form-control" id="secret"
+				aria-describedby="secretHelp" placeholder="Enter secret"> <small
+				id="secretHelp" class="form-text text-muted">Enter secret
+				for confidential clients, it can be left empty for authorization
+				code flow with PKCE with a public client</small>
 		</div>
 
 		<div class="form-group" id="code_verifier_fg">
-			<label class="font-weight-bold" for="code_verifier">Code verifier</label>
+			<label class="font-weight-bold" for="code_verifier">Code
+				verifier</label>
 			<div class="input-group mb-3">
-				<input type="text" class="form-control" id="code_verifier" aria-describedby="codeVerifierHelp" placeholder="Generated code verifier">
+				<input type="text" class="form-control" id="code_verifier"
+					aria-describedby="codeVerifierHelp"
+					placeholder="Generated code verifier">
 				<div class="input-group-append">
-					<button class="btn btn-outline-secondary" onClick="generateCodeChallengeAndVerifier()">Regenerate</button>
+					<button class="btn btn-outline-secondary"
+						onClick="generateCodeChallengeAndVerifier()">Regenerate</button>
 				</div>
 			</div>
-			<small id="codeVerifierHelp" class="form-text text-muted">Random string of 128 characters, which will be send to the authorization server during retrievel of the access token</small>
+			<small id="codeVerifierHelp" class="form-text text-muted">Random
+				string of 128 characters, which will be send to the authorization
+				server during retrievel of the access token</small>
 		</div>
-		
+
 		<div class="form-group" id="code_challenge_fg">
-			<label class="font-weight-bold" for="code_challenge">Code challenge</label>
-			<input type="text" class="form-control" id="code_challenge" aria-describedby="codeChallengeHelp" placeholder="Generated code challenge">
-			<small id="codeChallengeHelp" class="form-text text-muted">Base 64 url encoded version of Sha 256 of the code verifier which will be send to the authorization server during the authorization request</small>
+			<label class="font-weight-bold" for="code_challenge">Code
+				challenge</label> <input type="text" class="form-control"
+				id="code_challenge" aria-describedby="codeChallengeHelp"
+				placeholder="Generated code challenge"> <small
+				id="codeChallengeHelp" class="form-text text-muted">Base 64
+				url encoded version of Sha 256 of the code verifier which will be
+				send to the authorization server during the authorization request</small>
 		</div>
 
 		<div class="form-group" id="redirect_url_fg">
-			<label class="font-weight-bold" for="redirect_url">Redirect url</label>
-			<input type="text" class="form-control" id="redirect_url" aria-describedby="redirectURLHelp" placeholder="Enter redirect url">
-			<small id="redirectURLHelp" class="form-text text-muted">Redirect url that will be invoked after authorization</small>
+			<label class="font-weight-bold" for="redirect_url">Redirect
+				url</label> <input type="text" class="form-control" id="redirect_url"
+				aria-describedby="redirectURLHelp" placeholder="Enter redirect url">
+			<small id="redirectURLHelp" class="form-text text-muted">Redirect
+				url that will be invoked after authorization</small>
 		</div>
 
 		<div class="form-group" id="audience_fg">
-			<label class="font-weight-bold" for="audience">Audience</label>
-			<input type="text" class="form-control" id="audience" aria-describedby="audienceHelp" placeholder="Enter audience">
-			<small id="audienceHelp" class="form-text text-muted">Audience to which access is requested</small>
+			<label class="font-weight-bold" for="audience">Audience</label> <input
+				type="text" class="form-control" id="audience"
+				aria-describedby="audienceHelp" placeholder="Enter audience">
+			<small id="audienceHelp" class="form-text text-muted">Audience
+				to which access is requested</small>
 		</div>
 
 		<div class="form-group" id="scope_fg">
-			<label class="font-weight-bold" for="scope">Scope</label>
-			<input type="text" class="form-control" id="scope" aria-describedby="scopeHelp" placeholder="Enter scope">
-			<small id="scopeHelp" class="form-text text-muted">Scope to which access is requested</small>
+			<label class="font-weight-bold" for="scope">Scope</label> <input
+				type="text" class="form-control" id="scope"
+				aria-describedby="scopeHelp" placeholder="Enter scope"> <small
+				id="scopeHelp" class="form-text text-muted">Scope to which
+				access is requested</small>
 		</div>
 
 		<div>
@@ -118,11 +160,14 @@
 
 		<div class="panel">
 			<button class="btn btn-primary" onClick="authorize()">Authorize</button>
-			<button class="btn btn-primary" onClick="createRequest()">Show authorization request</button>
+			<button class="btn btn-primary" onClick="createRequest()">Show
+				authorization request</button>
 		</div>
 	</div>
 
-	<div class="panel-footer text-right"><a href="https://github.com/guychauliac/oauthgrant">v1.16.0</a></div>
+	<div class="panel-footer text-right">
+		<a href="https://github.com/guychauliac/oauthgrant">v1.16.1</a>
+	</div>
 </body>
 
 </html>
